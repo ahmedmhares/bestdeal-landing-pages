@@ -5,13 +5,34 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import ProjectInvestor from "./pages/ProjectInvestor";
+import ProjectEndUser from "./pages/ProjectEndUser";
 
 
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
+      <Route path={""} component={Home} />
       <Route path={"/404"} component={NotFound} />
+      <Route path={"/river-district"}>
+        {() => <ProjectInvestor projectId="river-district" />}
+      </Route>
+      <Route path={"/river-district/end-users"}>
+        {() => <ProjectEndUser projectId="river-district" />}
+      </Route>
+      <Route path={"/lumia-lagoon"}>
+        {() => <ProjectInvestor projectId="lumia-lagoon" />}
+      </Route>
+      <Route path={"/lumia-lagoon/end-users"}>
+        {() => <ProjectEndUser projectId="lumia-lagoon" />}
+      </Route>
+      {/* Dynamic project routes */}
+      <Route path={"/:projectId/end-users"}>
+        {({ projectId }: { projectId: string }) => <ProjectEndUser projectId={projectId} />}
+      </Route>
+      <Route path={"/:projectId"}>
+        {({ projectId }: { projectId: string }) => <ProjectInvestor projectId={projectId} />}
+      </Route>
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
