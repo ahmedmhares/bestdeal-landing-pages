@@ -23,7 +23,7 @@ export interface LeadData {
 export async function submitLeadToGoogleScript(leadData: LeadData): Promise<boolean> {
   try {
     // Google Apps Script Web App URL
-    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzt-Ia2ZAtCr3plI4tldwiJIwL7BtRodBP-4IzDuCk1OdBooW0YohqLM87LgcXmmwJv/exec";
+    const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzg4SsCqPWAro1Lc_8WvHas67jyOs7YZ3GEMcQf8NvXS9PZQFkB9GucXeijCiIPF6LX/exec";
 
     // Prepare the payload as FormData
     const formData = new FormData();
