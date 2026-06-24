@@ -17,40 +17,39 @@ export interface LeadData {
  * Submit lead data directly to Google Apps Script Web App
  * Returns true if successful, false if failed
  * 
- * Google Apps Script has CORS restrictions, so we use mode: 'no-cors'
- * This means we can't read the response, but we can still send the data
- * We handle success optimistically (show success message after POST)
+ * Uses FormData with application/x-www-form-urlencoded
+ * This is compatible with Google Apps Script doPost() function
  */
 export async function submitLeadToGoogleScript(leadData: LeadData): Promise<boolean> {
   try {
     // Google Apps Script Web App URL
     const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzt-Ia2ZAtCr3plI4tldwiJIwL7BtRodBP-4IzDuCk1OdBooW0YohqLM87LgcXmmwJv/exec";
 
-    // Prepare the payload
-    const payload = {
-      name: leadData.name,
-      phone: leadData.phone,
-      timestamp: leadData.timestamp,
-      pageUrl: leadData.pageUrl,
-      projectName: leadData.projectName,
-      buyingPurpose: leadData.buyingPurpose === "living" ? "سكن" : "استثمار",
-      source: "river-district-landing",
-    };
+    // Prepare the payload as FormData
+    const formData = new FormData();
+    formData.append("name", leadData.name);
+    formData.append("phone", leadData.phone);
+    formData.append("timestamp", leadData.timestamp);
+    formData.append("pageUrl", leadData.pageUrl);
+    formData.append("projectName", leadData.projectName);
+    formData.append("buyingPurpose", leadData.buyingPurpose === "living" ? "سكن" : "استثمار");
+    formData.append("source", "river-district-landing");
 
     // Submit to Google Apps Script
-    // Using mode: 'no-cors' because Apps Script has CORS restrictions
+    // FormData will be sent as application/x-www-form-urlencoded
     const response = await fetch(appsScriptUrl, {
       method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
+      body: formData,
+      // Don't set Content-Type header - browser will set it automatically with FormData
     });
 
-    // With no-cors, we can't read the response status
-    // We assume success if no network error occurred
-    console.log("Lead submitted to Google Apps Script");
+    // Check if response is ok
+    if (!response.ok) {
+      console.error("Google Apps Script error:", response.status, response.statusText);
+      return false;
+    }
+
+    console.log("Lead submitted to Google Apps Script successfully");
     return true;
   } catch (error) {
     console.error("Failed to submit lead to Google Apps Script:", error);
