@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { ChevronRight, MapPin, Home, TrendingUp, DollarSign, Sparkles, Zap, BarChart3, Shield, MessageCircle, Check, Loader } from "lucide-react";
 import { toast } from "sonner";
-import { submitLeadToFormspree, type LeadData } from "@/lib/formspree";
+import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
 
 export default function RiverDistrict() {
   const [buyingPurpose, setBuyingPurpose] = useState<"living" | "investment" | null>(null);
@@ -40,8 +40,8 @@ export default function RiverDistrict() {
         buyingPurpose: buyingPurpose,
       };
 
-      // Submit to Formspree
-      const success = await submitLeadToFormspree(leadData);
+      // Submit to Google Apps Script
+      const success = await submitLeadToGoogleScript(leadData);
 
       if (!success) {
         toast.error("فشل حفظ البيانات. الرجاء المحاولة مرة أخرى");
