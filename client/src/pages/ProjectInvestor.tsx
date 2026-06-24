@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { getProject } from "@/lib/projects";
-import { ChevronRight, MapPin, TrendingUp, DollarSign, Phone } from "lucide-react";
+import { ChevronRight, MapPin, TrendingUp, DollarSign, Phone, BarChart3, Zap, Shield } from "lucide-react";
 
 interface ProjectInvestorProps {
   projectId: string;
@@ -23,7 +23,7 @@ export default function ProjectInvestor({ projectId }: ProjectInvestorProps) {
 
   const handleWhatsApp = () => {
     const message = encodeURIComponent(
-      `مرحبا، أنا مهتم بـ ${project.name} كاستثمار. هل يمكنك إرسال المزيد من المعلومات؟`
+      `مرحبا، أنا مهتم بـ ${project.name} كاستثمار. هل يمكنك إرسال المزيد من المعلومات والعروض الحالية؟`
     );
     window.open(`https://wa.me/${project.phone.replace(/[^0-9]/g, "")}?text=${message}`);
   };
@@ -31,19 +31,19 @@ export default function ProjectInvestor({ projectId }: ProjectInvestorProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <header className="border-b border-white/10 backdrop-blur-xl bg-black/40">
+      <header className="border-b border-white/10 backdrop-blur-xl bg-black/40 sticky top-0 z-50">
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-white">{project.name}</h1>
-              <p className="text-sm text-slate-400">Investment Opportunity</p>
+              <p className="text-sm text-green-400 font-semibold">فرصة استثمارية حصرية</p>
             </div>
             <Button
               onClick={handleWhatsApp}
               className="bg-green-600 hover:bg-green-700 text-white"
             >
               <Phone className="w-4 h-4 mr-2" />
-              WhatsApp
+              تواصل معنا
             </Button>
           </div>
         </div>
@@ -55,35 +55,35 @@ export default function ProjectInvestor({ projectId }: ProjectInvestorProps) {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-block px-4 py-2 bg-green-500/20 border border-green-500/50 rounded-full mb-6">
-                <span className="text-green-400 text-sm font-semibold">Investment Grade</span>
+                <span className="text-green-400 text-sm font-semibold">🎯 فرصة استثمارية</span>
               </div>
               <h2 className="text-5xl font-bold text-white mb-6 leading-tight">
-                {project.investorTitle}
+                استثمر في أفضل المشاريع العقارية بالعاصمة الإدارية
               </h2>
               <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                {project.investorDescription}
+                River District يقدم فرصة استثمارية نادرة مع عائدات قوية وإمكانية تقدير رأس المال العالي. موقع استراتيجي في قلب العاصمة الإدارية الجديدة.
               </p>
 
-              {/* Key Metrics */}
+              {/* Key Investment Metrics */}
               <div className="grid grid-cols-2 gap-4 mb-8">
-                <Card className="bg-white/5 border-white/10 p-4">
+                <Card className="bg-white/5 border-white/10 p-4 hover:bg-white/10 transition-colors">
                   <div className="flex items-center gap-3">
                     <DollarSign className="w-5 h-5 text-green-400" />
                     <div>
-                      <p className="text-xs text-slate-400">Price per M²</p>
+                      <p className="text-xs text-slate-400">سعر المتر</p>
                       <p className="text-lg font-bold text-white">
-                        {project.pricePerMeter.toLocaleString()} EGP
+                        {project.pricePerMeter.toLocaleString()} جنيه
                       </p>
                     </div>
                   </div>
                 </Card>
-                <Card className="bg-white/5 border-white/10 p-4">
+                <Card className="bg-white/5 border-white/10 p-4 hover:bg-white/10 transition-colors">
                   <div className="flex items-center gap-3">
                     <TrendingUp className="w-5 h-5 text-blue-400" />
                     <div>
-                      <p className="text-xs text-slate-400">Monthly</p>
+                      <p className="text-xs text-slate-400">القسط الشهري</p>
                       <p className="text-lg font-bold text-white">
-                        {(project.monthlyInstallment / 1000).toFixed(0)}K EGP
+                        {(project.monthlyInstallment / 1000).toFixed(0)}K جنيه
                       </p>
                     </div>
                   </div>
@@ -95,25 +95,25 @@ export default function ProjectInvestor({ projectId }: ProjectInvestorProps) {
                 size="lg"
                 className="bg-green-600 hover:bg-green-700 text-white w-full md:w-auto"
               >
-                Get More Details
+                احصل على تفاصيل الاستثمار
                 <ChevronRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
 
-            {/* Right side - Stats */}
+            {/* Right side - Investment Benefits */}
             <div className="space-y-6">
               <div className="bg-gradient-to-br from-green-500/20 to-green-600/10 border border-green-500/30 rounded-xl p-8">
                 <h3 className="text-sm font-semibold text-green-400 mb-4 uppercase tracking-wide">
-                  Investment Benefits
+                  💰 مميزات الاستثمار
                 </h3>
                 <ul className="space-y-3">
                   {[
-                    "Prime Location with High Appreciation",
-                    "Strong Rental Income Potential",
-                    "Modern Architecture & Design",
-                    "Flexible Payment Plans",
-                    "Capital Growth Opportunity",
-                    "Professional Management"
+                    "موقع استراتيجي - قلب العاصمة الإدارية",
+                    "إمكانية تقدير رأس المال العالي",
+                    "دخل إيجاري قوي ومستقر",
+                    "خطط دفع مرنة وسهلة",
+                    "عائد استثماري مضمون",
+                    "إدارة احترافية للمشروع"
                   ].map((benefit, idx) => (
                     <li key={idx} className="flex items-start gap-3">
                       <div className="w-2 h-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
@@ -127,10 +127,34 @@ export default function ProjectInvestor({ projectId }: ProjectInvestorProps) {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Investment Comparison Section */}
       <section className="py-16 border-t border-white/10">
         <div className="container">
-          <h3 className="text-3xl font-bold text-white mb-12">Project Features</h3>
+          <h3 className="text-3xl font-bold text-white mb-12">📊 مقارنة الاستثمار</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="bg-white/5 border-white/10 p-6">
+              <BarChart3 className="w-8 h-8 text-blue-400 mb-4" />
+              <h4 className="text-lg font-bold text-white mb-2">العائد على الاستثمار</h4>
+              <p className="text-slate-300 text-sm">عائد سنوي قوي مع إمكانية تقدير رأس المال</p>
+            </Card>
+            <Card className="bg-white/5 border-white/10 p-6">
+              <Zap className="w-8 h-8 text-yellow-400 mb-4" />
+              <h4 className="text-lg font-bold text-white mb-2">فرصة نادرة</h4>
+              <p className="text-slate-300 text-sm">مشروع حصري في موقع استراتيجي بالعاصمة</p>
+            </Card>
+            <Card className="bg-white/5 border-white/10 p-6">
+              <Shield className="w-8 h-8 text-green-400 mb-4" />
+              <h4 className="text-lg font-bold text-white mb-2">استثمار آمن</h4>
+              <p className="text-slate-300 text-sm">مشروع موثوق من مطور عقاري معروف</p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Project Features */}
+      <section className="py-16 border-t border-white/10">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-white mb-12">🏗️ مميزات المشروع</h3>
           <div className="grid md:grid-cols-3 gap-6">
             {project.features.map((feature, idx) => (
               <Card key={idx} className="bg-white/5 border-white/10 p-6 hover:bg-white/10 transition-colors">
@@ -142,19 +166,56 @@ export default function ProjectInvestor({ projectId }: ProjectInvestorProps) {
         </div>
       </section>
 
+      {/* Payment Plans Section */}
+      <section className="py-16 border-t border-white/10">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-white mb-12">💳 خطط الدفع المرنة</h3>
+          <div className="grid md:grid-cols-2 gap-8">
+            <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/30 p-8">
+              <h4 className="text-xl font-bold text-white mb-4">خطة الدفع الأساسية</h4>
+              <ul className="space-y-3 text-slate-300">
+                <li className="flex items-center gap-2">
+                  <span className="text-green-400">✓</span> دفعة أولى 10%
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-400">✓</span> أقساط شهرية مريحة
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-green-400">✓</span> فترة سماح طويلة
+                </li>
+              </ul>
+            </Card>
+            <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/30 p-8">
+              <h4 className="text-xl font-bold text-white mb-4">خطة الدفع المتقدمة</h4>
+              <ul className="space-y-3 text-slate-300">
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-400">✓</span> دفعة أولى 5%
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-400">✓</span> أقساط شهرية أقل
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="text-blue-400">✓</span> خصومات خاصة للمستثمرين
+                </li>
+              </ul>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-green-600/20 to-blue-600/20 border-t border-white/10">
         <div className="container text-center">
-          <h3 className="text-3xl font-bold text-white mb-4">Ready to Invest?</h3>
+          <h3 className="text-3xl font-bold text-white mb-4">هل أنت مستعد للاستثمار؟</h3>
           <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-            Contact us today to learn more about this exclusive investment opportunity.
+            تواصل معنا اليوم واحصل على معلومات حصرية عن الفرص الاستثمارية المتاحة والعروض الخاصة.
           </p>
           <Button
             onClick={handleWhatsApp}
             size="lg"
             className="bg-green-600 hover:bg-green-700 text-white"
           >
-            Contact Us Now
+            تواصل معنا الآن
             <ChevronRight className="w-4 h-4 ml-2" />
           </Button>
         </div>
