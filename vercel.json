@@ -1,6 +1,7 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "dist",
+  "outputDirectory": "dist/public",
+  "framework": "vite",
   "rewrites": [
     {
       "source": "/(.*)",
