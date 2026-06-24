@@ -5,8 +5,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import ProjectInvestor from "./pages/ProjectInvestor";
-import ProjectEndUser from "./pages/ProjectEndUser";
+import RiverDistrict from "./pages/RiverDistrict";
 
 
 function Router() {
@@ -14,12 +13,9 @@ function Router() {
     <Switch>
       <Route path={""} component={Home} />
       <Route path={"/404"} component={NotFound} />
-      {/* Specific routes first (highest priority) */}
-      <Route path={"/river-district/end-users"}>
-        {() => <ProjectEndUser projectId="river-district" />}
-      </Route>
+      {/* River District - Single unified page */}
       <Route path={"/river-district"}>
-        {() => <ProjectInvestor projectId="river-district" />}
+        {() => <RiverDistrict />}
       </Route>
       {/* Final fallback route */}
       <Route component={NotFound} />
