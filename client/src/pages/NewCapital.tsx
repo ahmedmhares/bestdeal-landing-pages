@@ -2,9 +2,10 @@ import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { ChevronRight, MapPin, Home, TrendingUp, DollarSign, Sparkles, Zap, BarChart3, Shield, MessageCircle, Check, Loader } from "lucide-react";
+import { ChevronRight, MapPin, BarChart3, MessageCircle, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
+import { useContent } from "@/hooks/useContent";
 
 // Utility function to extract UTM parameters
 function getUTMParameters() {
@@ -19,22 +20,41 @@ function getUTMParameters() {
 }
 
 export default function NewCapital() {
+  const { getProject, getGlobalData, loading } = useContent();
+  const project = getProject("new-capital");
+  const globalData = getGlobalData();
+
   const [buyingPurpose, setBuyingPurpose] = useState<"living" | "investment" | null>(null);
   const [formData, setFormData] = useState({ name: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
-  const whatsappPhone = "+201044238910";
   const utmParams = getUTMParameters();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!project || !globalData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-red-500">Project not found</p>
+      </div>
+    );
+  }
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name.trim() || !formData.phone.trim() || !buyingPurpose) {
       toast.error("الرجاء ملء جميع الحقول");
       return;
@@ -43,312 +63,300 @@ export default function NewCapital() {
     setIsSubmitting(true);
 
     try {
-      // Prepare lead data with UTM parameters
       const leadData: LeadData = {
         name: formData.name,
         phone: formData.phone,
         timestamp: new Date().toISOString(),
         pageUrl: window.location.href,
-        projectName: "New Capital",
-        buyingPurpose: buyingPurpose,
+        projectName: project.name,
+        buyingPurpose: buyingPurpose || "investment",
         source: "new-capital-landing",
-        ...utmParams,
+        utmSource: utmParams.utmSource,
+        utmCampaign: utmParams.utmCampaign,
+        utmMedium: utmParams.utmMedium,
+        utmContent: utmParams.utmContent,
+        fbclid: utmParams.fbclid,
       };
 
-      // Submit to Google Apps Script
       const success = await submitLeadToGoogleScript(leadData);
 
-      if (!success) {
-        toast.error("حدث خطأ أثناء حفظ البيانات، برجاء المحاولة مرة أخرى");
-        setIsSubmitting(false);
-        return;
+      if (success) {
+        toast.success(globalData.successMessage);
+        setFormData({ name: "", phone: "" });
+        setBuyingPurpose(null);
+        setSubmitSuccess(true);
+
+        // Open WhatsApp after successful submission
+        setTimeout(() => {
+          const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
+          const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
+          window.open(whatsappUrl, "_blank");
+        }, 1000);
+      } else {
+        toast.error(globalData.errorMessage);
       }
-
-      // Show success message ONLY after successful submission
-      toast.success("تم استلام بياناتك بنجاح");
-      setSubmitSuccess(true);
-
-      // Reset form
-      setFormData({ name: "", phone: "" });
-      setBuyingPurpose(null);
-
-      // Open WhatsApp in new tab ONLY after successful submission
-      setTimeout(() => {
-        const purpose = buyingPurpose === "living" ? "للسكن" : "كاستثمار";
-        const message = encodeURIComponent(
-          `مرحبا، أنا ${formData.name}. أنا مهتم بـ New Capital ${purpose}. هل يمكنك إرسال المزيد من المعلومات والعروض الحالية؟`
-        );
-        window.open(`https://wa.me/${whatsappPhone.replace("+", "")}?text=${message}`, "_blank");
-      }, 500);
-
-      // Reset success state after 3 seconds
-      setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (error) {
-      console.error("Error submitting lead:", error);
-      toast.error("حدث خطأ. الرجاء المحاولة مرة أخرى");
+      console.error("Form submission error:", error);
+      toast.error(globalData.errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleWhatsAppClick = () => {
-    const message = encodeURIComponent("مرحبا، أنا مهتم بـ New Capital. هل يمكنك إرسال المزيد من المعلومات؟");
-    window.open(`https://wa.me/${whatsappPhone.replace("+", "")}?text=${message}`, "_blank");
-  };
-
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 rtl">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg"></div>
-            <span className="font-bold text-lg">Best Deal</span>
+      <header className="border-b border-slate-200 bg-white">
+        <div className="container py-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-slate-900">{globalData.companyName}</h1>
+              <p className="text-sm text-slate-600">Real Estate Investment</p>
+            </div>
+            <a href="/" className="text-blue-600 hover:text-blue-700">
+              ← العودة للرئيسية
+            </a>
           </div>
-          <Button onClick={handleWhatsAppClick} size="sm" className="bg-green-600 hover:bg-green-700">
-            <MessageCircle className="w-4 h-4 mr-2" />
-            تواصل معنا
-          </Button>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="py-12 md:py-20 bg-gradient-to-b from-blue-50 to-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">العاصمة الإدارية الجديدة</h1>
-            <p className="text-xl text-gray-600 mb-2">New Capital</p>
-            <p className="text-gray-500">أكبر مشروع عمراني في الشرق الأوسط</p>
+      <section className="relative py-20 overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{ backgroundImage: `url(${project.images.hero})` }}
+        />
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <h2 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">{project.name}</h2>
+            <p className="text-xl text-slate-700 mb-6">{project.description}</p>
+            <p className="text-lg text-slate-600">{project.longDescription}</p>
           </div>
-
-          {/* Project Card */}
-          <Card className="p-6 md:p-8 bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h2 className="text-2xl font-bold mb-4">العاصمة الإدارية الجديدة</h2>
-                <p className="text-gray-700 mb-6">
-                  أكبر مشروع عمراني في الشرق الأوسط يقع على بعد 45 كم من القاهرة. مدينة متكاملة بكل الخدمات والمرافق الحديثة.
-                </p>
-                
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">الموقع</p>
-                      <p className="text-sm text-gray-600">45 كم من القاهرة - طريق القاهرة السويس</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <TrendingUp className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">سعر المتر</p>
-                      <p className="text-sm text-gray-600">من 120,000 جنيه</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <DollarSign className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">الدفع الشهري</p>
-                      <p className="text-sm text-gray-600">من 200,000 جنيه</p>
-                    </div>
-                  </div>
-                </div>
-
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6">
-                  احصل على السعر الحالي
-                  <ChevronRight className="w-4 h-4 ml-2" />
-                </Button>
-              </div>
-
-              <div className="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-lg p-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl font-bold text-blue-600 mb-2">120K</div>
-                  <p className="text-gray-600">سعر المتر المربع</p>
-                </div>
-              </div>
-            </div>
-          </Card>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">مميزات المشروع</h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: Home, title: "وحدات فاخرة", desc: "شقق وفيلات وقصور فاخرة" },
-              { icon: Sparkles, title: "خدمات عالمية", desc: "مول تجاري وفنادق 5 نجوم" },
-              { icon: Zap, title: "بنية تحتية متقدمة", desc: "أحدث التقنيات والخدمات" },
-              { icon: BarChart3, title: "عائد استثماري ممتاز", desc: "أفضل موقع = أفضل عائد" },
-              { icon: Shield, title: "أمان واستقرار", desc: "مدينة حكومية آمنة" },
-              { icon: TrendingUp, title: "نمو مستمر", desc: "مشروع استراتيجي وطني" },
-            ].map((feature, idx) => (
-              <Card key={idx} className="p-6 text-center hover:shadow-lg transition-shadow">
-                <feature.icon className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h3 className="font-bold mb-2">{feature.title}</h3>
-                <p className="text-sm text-gray-600">{feature.desc}</p>
+      {/* Key Info */}
+      <section className="py-12 bg-white border-b border-slate-200">
+        <div className="container">
+          <div className="grid md:grid-cols-3 gap-8">
+            <div>
+              <p className="text-sm text-slate-600 mb-2">الموقع</p>
+              <div className="flex items-center gap-2 text-slate-900">
+                <MapPin className="w-5 h-5" />
+                <p className="font-semibold">{project.location}</p>
+              </div>
+            </div>
+            <div>
+              <p className="text-sm text-slate-600 mb-2">سعر المتر</p>
+              <p className="text-2xl font-bold text-slate-900">
+                {(project.pricePerMeter / 1000).toFixed(0)}K EGP
+              </p>
+            </div>
+            <div>
+              <p className="text-sm text-slate-600 mb-2">الدفع الشهري</p>
+              <p className="text-2xl font-bold text-slate-900">
+                {(project.monthlyInstallment / 1000).toFixed(0)}K EGP
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Project Description */}
+      <section className="py-20">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">{project.name}</h3>
+          <p className="text-lg text-slate-700 mb-8 text-center max-w-2xl mx-auto">{project.longDescription}</p>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">مميزات المشروع</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {project.highlights.map((highlight, idx) => (
+              <Card key={idx} className="p-6 hover:shadow-lg transition-shadow">
+                <h4 className="text-lg font-bold text-slate-900 mb-2">{highlight.title}</h4>
+                <p className="text-slate-600">{highlight.description}</p>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-12 md:py-16 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">أسئلة شائعة</h2>
-          
-          <Accordion type="single" collapsible>
-            <AccordionItem value="q1">
-              <AccordionTrigger>ما هو أفضل وقت للاستثمار في العاصمة الجديدة؟</AccordionTrigger>
-              <AccordionContent>
-                الآن هو أفضل وقت قبل اكتمال المشروع والارتفاع الكبير في الأسعار. المراحل الأولى توفر أسعار تنافسية.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q2">
-              <AccordionTrigger>هل هناك خطط دفع مرنة؟</AccordionTrigger>
-              <AccordionContent>
-                نعم، خطط دفع مرنة حتى 10 سنوات بدون فوائد. حسومات خاصة للدفع الفوري والدفعات المبكرة.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q3">
-              <AccordionTrigger>ما هو العائد المتوقع؟</AccordionTrigger>
-              <AccordionContent>
-                العائد المتوقع 20-30% سنوياً. الموقع الاستراتيجي والطلب الكبير يضمن تقديراً سعرياً قوياً.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q4">
-              <AccordionTrigger>هل المشروع آمن استثمارياً؟</AccordionTrigger>
-              <AccordionContent>
-                نعم، مشروع حكومي استراتيجي بدعم كامل من الدولة. أمان واستقرار مضمون.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="q5">
-              <AccordionTrigger>كيف أبدأ الاستثمار؟</AccordionTrigger>
-              <AccordionContent>
-                ملء النموذج أدناه وسنتواصل معك بجميع التفاصيل والعروض الحصرية والمميزة.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+      {/* FAQ */}
+      <section className="py-20">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">أسئلة شائعة</h3>
+          <div className="max-w-2xl mx-auto">
+            <Accordion type="single" collapsible>
+              {project.faq.map((item, idx) => (
+                <AccordionItem key={idx} value={`item-${idx}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
-      {/* Form Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-blue-50">
-        <div className="max-w-2xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-2">احصل على العرض الحالي</h2>
-            <p className="text-gray-600">تواصل معنا الآن واحصل على أفضل الأسعار والعروض الحصرية</p>
-          </div>
+      {/* Lead Form */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-3xl font-bold text-slate-900 mb-4 text-center">احصل على العرض الحالي</h3>
+            <p className="text-slate-600 text-center mb-12">تواصل معنا الآن واحصل على أفضل الأسعار والعروض الحصرية</p>
 
-          <Card className="p-8" ref={formRef}>
-            <form onSubmit={handleFormSubmit} className="space-y-6">
-              {/* Name Input */}
-              <div>
-                <label className="block text-sm font-medium mb-2">الاسم الكامل</label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="أدخل اسمك الكامل"
-                  value={formData.name}
-                  onChange={handleFormChange}
-                  className="w-full px-4 py-3 md:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              {/* Phone Input */}
-              <div>
-                <label className="block text-sm font-medium mb-2">رقم الهاتف</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="+20 1XX XXX XXXX"
-                  value={formData.phone}
-                  onChange={handleFormChange}
-                  className="w-full px-4 py-3 md:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={isSubmitting}
-                />
-              </div>
-
-              {/* Buying Purpose */}
-              <div>
-                <label className="block text-sm font-medium mb-2">ما هو الغرض من الاستثمار؟</label>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setBuyingPurpose("investment")}
-                    className={`py-3 md:py-2 px-4 rounded-lg font-medium transition-colors ${
-                      buyingPurpose === "investment"
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                    disabled={isSubmitting}
+            <Card className="p-8" ref={formRef}>
+              {submitSuccess ? (
+                <div className="text-center py-12">
+                  <div className="mb-4">
+                    <MessageCircle className="w-16 h-16 text-green-600 mx-auto" />
+                  </div>
+                  <h4 className="text-2xl font-bold text-slate-900 mb-2">{globalData.successMessage}</h4>
+                  <p className="text-slate-600 mb-6">سيتم فتح WhatsApp لتتمكن من التواصل معنا</p>
+                  <Button
+                    onClick={() => {
+                      setSubmitSuccess(false);
+                      setFormData({ name: "", phone: "" });
+                      setBuyingPurpose(null);
+                    }}
+                    className="bg-blue-600 hover:bg-blue-700"
                   >
-                    استثمار
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setBuyingPurpose("living")}
-                    className={`py-3 md:py-2 px-4 rounded-lg font-medium transition-colors ${
-                      buyingPurpose === "living"
-                        ? "bg-blue-600 text-white"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
-                    disabled={isSubmitting}
-                  >
-                    سكن
-                  </button>
+                    ملء النموذج مرة أخرى
+                  </Button>
                 </div>
-              </div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">الاسم الكامل</label>
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="أدخل اسمك الكامل"
+                      value={formData.name}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 md:py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
 
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 md:py-3 font-bold text-lg md:text-base"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader className="w-5 h-5 mr-2 animate-spin" />
-                    جاري الإرسال...
-                  </>
-                ) : (
-                  <>
-                    احصل على التفاصيل
-                    <ChevronRight className="w-5 h-5 mr-2" />
-                  </>
-                )}
-              </Button>
-            </form>
-          </Card>
+                  <div>
+                    <label className="block text-sm font-medium mb-2">رقم الهاتف</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="+20 1XX XXX XXXX"
+                      value={formData.phone}
+                      onChange={handleFormChange}
+                      className="w-full px-4 py-3 md:py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">ما هو الغرض من الاستثمار؟</label>
+                    <div className="flex gap-4">
+                      <button
+                        type="button"
+                        onClick={() => setBuyingPurpose("investment")}
+                        className={`flex-1 py-3 md:py-2 px-4 rounded-lg font-medium transition-all ${
+                          buyingPurpose === "investment"
+                            ? "bg-blue-600 text-white"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }`}
+                      >
+                        استثمار
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setBuyingPurpose("living")}
+                        className={`flex-1 py-3 md:py-2 px-4 rounded-lg font-medium transition-all ${
+                          buyingPurpose === "living"
+                            ? "bg-blue-600 text-white"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }`}
+                      >
+                        سكن
+                      </button>
+                    </div>
+                  </div>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 md:py-3 text-lg md:text-base"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader className="w-5 h-5 mr-2 animate-spin" />
+                        جاري الإرسال...
+                      </>
+                    ) : (
+                      <>
+                        {project.ctaText || globalData.ctaText}
+                        <ChevronRight className="w-5 h-5 mr-2" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+              )}
+            </Card>
+
+            {submitSuccess && (
+              <div className="mt-8 text-center">
+                <Button
+                  onClick={() => {
+                    const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
+                    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
+                    window.open(whatsappUrl, "_blank");
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  تواصل عبر WhatsApp
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">هل تريد معرفة المزيد؟</h2>
-          <p className="text-lg mb-8 text-blue-100">تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية</p>
-          <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <Button onClick={handleWhatsAppClick} className="bg-white text-blue-600 hover:bg-gray-100 py-6 md:py-3">
+      <section className="py-20 bg-blue-600 text-white">
+        <div className="container text-center">
+          <h3 className="text-3xl font-bold mb-4">هل تريد معرفة المزيد؟</h3>
+          <p className="text-xl mb-8 opacity-90">تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية</p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Button
+              onClick={() => {
+                formRef.current?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="bg-white text-blue-600 hover:bg-slate-100"
+            >
+              ملء النموذج
+            </Button>
+            <Button
+              onClick={() => {
+                const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
+                const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
+                window.open(whatsappUrl, "_blank");
+              }}
+              className="bg-green-600 hover:bg-green-700"
+            >
               <MessageCircle className="w-5 h-5 mr-2" />
               تواصل عبر WhatsApp
-            </Button>
-            <Button className="bg-blue-700 hover:bg-blue-800 text-white py-6 md:py-3">
-              ملء النموذج
-              <ChevronRight className="w-5 h-5 mr-2" />
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-8">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p>© 2026 New Capital by Best Deal Real Estate. جميع الحقوق محفوظة.</p>
+      <footer className="border-t border-slate-200 py-8 bg-white">
+        <div className="container text-center text-slate-600">
+          <p>© 2026 {project.name} by {globalData.companyName}. جميع الحقوق محفوظة.</p>
         </div>
       </footer>
     </div>
