@@ -14,24 +14,12 @@ function Router() {
     <Switch>
       <Route path={""} component={Home} />
       <Route path={"/404"} component={NotFound} />
-      <Route path={"/river-district"}>
-        {() => <ProjectInvestor projectId="river-district" />}
-      </Route>
+      {/* Specific routes first (highest priority) */}
       <Route path={"/river-district/end-users"}>
         {() => <ProjectEndUser projectId="river-district" />}
       </Route>
-      <Route path={"/lumia-lagoon"}>
-        {() => <ProjectInvestor projectId="lumia-lagoon" />}
-      </Route>
-      <Route path={"/lumia-lagoon/end-users"}>
-        {() => <ProjectEndUser projectId="lumia-lagoon" />}
-      </Route>
-      {/* Dynamic project routes */}
-      <Route path={"/:projectId/end-users"}>
-        {({ projectId }: { projectId: string }) => <ProjectEndUser projectId={projectId} />}
-      </Route>
-      <Route path={"/:projectId"}>
-        {({ projectId }: { projectId: string }) => <ProjectInvestor projectId={projectId} />}
+      <Route path={"/river-district"}>
+        {() => <ProjectInvestor projectId="river-district" />}
       </Route>
       {/* Final fallback route */}
       <Route component={NotFound} />

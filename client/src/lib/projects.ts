@@ -36,28 +36,6 @@ export const projects: Record<string, ProjectData> = {
       "Investment Grade"
     ],
     phone: "+201044238910"
-  },
-  "lumia-lagoon": {
-    id: "lumia-lagoon",
-    name: "Lumia Lagoon",
-    title: "Lumia Lagoon - Coastal Paradise",
-    description: "Exclusive beachfront development on the North Coast",
-    location: "North Coast, Egypt",
-    pricePerMeter: 75000,
-    monthlyInstallment: 120000,
-    investorTitle: "Coastal Investment Opportunity",
-    investorDescription: "Lumia Lagoon represents a rare beachfront investment with strong rental potential and capital appreciation.",
-    endUserTitle: "Beach Living at Its Finest",
-    endUserDescription: "Wake up to the sound of waves. Lumia Lagoon offers exclusive beachfront living with world-class amenities.",
-    features: [
-      "Beachfront Access",
-      "Lagoon Views",
-      "Resort Amenities",
-      "Water Sports",
-      "Luxury Villas",
-      "Rental Income Potential"
-    ],
-    phone: "+201044238910"
   }
 };
 
