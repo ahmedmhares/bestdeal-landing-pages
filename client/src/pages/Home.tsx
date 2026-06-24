@@ -99,7 +99,7 @@ export default function Home() {
                       navigate(`/${project.id}`);
                     }}
                   >
-                    For Investment
+                    Get Current Prices & Payment Plan
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
