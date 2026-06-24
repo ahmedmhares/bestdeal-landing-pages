@@ -12,7 +12,11 @@
       }
     },
     {
-      "src": "/.*",
+      "src": "/content.json",
+      "dest": "/content.json"
+    },
+    {
+      "src": "/(.*)",
       "dest": "/index.html"
     }
   ]
