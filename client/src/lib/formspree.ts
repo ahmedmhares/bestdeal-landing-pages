@@ -15,30 +15,29 @@ export interface LeadData {
 /**
  * Submit lead data to Formspree
  * Returns true if successful, false if failed
+ * Uses application/x-www-form-urlencoded for proper Formspree compatibility
  */
 export async function submitLeadToFormspree(leadData: LeadData): Promise<boolean> {
   try {
-    // Formspree endpoint - replace with your actual form ID
-    // You can get this from https://formspree.io
+    // Formspree endpoint
     const formspreeId = import.meta.env.VITE_FORMSPREE_ID || "mkoloqwz"; // River District Leads
     const formspreeUrl = `https://formspree.io/f/${formspreeId}`;
 
+    // Create FormData object for proper form submission
+    const formData = new FormData();
+    formData.append("name", leadData.name);
+    formData.append("phone", leadData.phone);
+    formData.append("timestamp", leadData.timestamp);
+    formData.append("pageUrl", leadData.pageUrl);
+    formData.append("projectName", leadData.projectName);
+    formData.append("buyingPurpose", leadData.buyingPurpose);
+    formData.append("source", "river-district-landing");
+    formData.append("_subject", `New Lead: ${leadData.name} - ${leadData.projectName}`);
+
     const response = await fetch(formspreeUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        name: leadData.name,
-        phone: leadData.phone,
-        timestamp: leadData.timestamp,
-        pageUrl: leadData.pageUrl,
-        projectName: leadData.projectName,
-        buyingPurpose: leadData.buyingPurpose,
-        source: "river-district-landing",
-        _subject: `New Lead: ${leadData.name} - ${leadData.projectName}`,
-      }),
+      body: formData,
+      // Don't set Content-Type header - browser will set it automatically with FormData
     });
 
     if (!response.ok) {
