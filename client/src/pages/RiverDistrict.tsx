@@ -2,8 +2,9 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { ChevronRight, MapPin, Home, TrendingUp, DollarSign, Phone, Heart, Sparkles, Zap, BarChart3, Shield, MessageCircle, Check, AlertCircle } from "lucide-react";
+import { ChevronRight, MapPin, Home, TrendingUp, DollarSign, Sparkles, Zap, BarChart3, Shield, MessageCircle, Check, Loader } from "lucide-react";
 import { toast } from "sonner";
+import { submitLeadToFormspree, type LeadData } from "@/lib/formspree";
 
 export default function RiverDistrict() {
   const [buyingPurpose, setBuyingPurpose] = useState<"living" | "investment" | null>(null);
@@ -29,24 +30,26 @@ export default function RiverDistrict() {
     setIsSubmitting(true);
 
     try {
-      // Save lead data to localStorage (for demo) or send to backend
-      const leadData = {
+      // Prepare lead data
+      const leadData: LeadData = {
         name: formData.name,
         phone: formData.phone,
-        purpose: buyingPurpose,
-        project: "River District",
         timestamp: new Date().toISOString(),
+        pageUrl: window.location.href,
+        projectName: "River District",
+        buyingPurpose: buyingPurpose,
       };
 
-      // Store in localStorage
-      const existingLeads = JSON.parse(localStorage.getItem("river_district_leads") || "[]");
-      existingLeads.push(leadData);
-      localStorage.setItem("river_district_leads", JSON.stringify(existingLeads));
+      // Submit to Formspree
+      const success = await submitLeadToFormspree(leadData);
 
-      // Log for verification
-      console.log("Lead saved:", leadData);
+      if (!success) {
+        toast.error("فشل حفظ البيانات. الرجاء المحاولة مرة أخرى");
+        setIsSubmitting(false);
+        return;
+      }
 
-      // Show success message
+      // Show success message ONLY after successful submission
       toast.success("تم استلام بياناتك بنجاح");
       setSubmitSuccess(true);
 
@@ -54,7 +57,7 @@ export default function RiverDistrict() {
       setFormData({ name: "", phone: "" });
       setBuyingPurpose(null);
 
-      // Open WhatsApp in new tab after success
+      // Open WhatsApp in new tab ONLY after successful submission
       setTimeout(() => {
         const purpose = buyingPurpose === "living" ? "للسكن" : "كاستثمار";
         const message = encodeURIComponent(
@@ -66,7 +69,7 @@ export default function RiverDistrict() {
       // Reset success state after 3 seconds
       setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (error) {
-      console.error("Error saving lead:", error);
+      console.error("Error submitting lead:", error);
       toast.error("حدث خطأ. الرجاء المحاولة مرة أخرى");
     } finally {
       setIsSubmitting(false);
@@ -131,7 +134,7 @@ export default function RiverDistrict() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { icon: Sparkles, title: "40 فدان", desc: "مساحة ضخمة للتطوير والاستثمار" },
-              { icon: Heart, title: "1500 متر واجهة نيلية", desc: "إطلالات مباشرة على النيل" },
+              { icon: Check, title: "1500 متر واجهة نيلية", desc: "إطلالات مباشرة على النيل" },
               { icon: Zap, title: "12% فقط مباني", desc: "88% مساحات خضراء وخدمات" },
               { icon: BarChart3, title: "عائد استثماري قوي", desc: "تقدير سعري مستمر" },
               { icon: Shield, title: "مطور موثوق", desc: "River District by Nile Development" },
@@ -361,8 +364,17 @@ export default function RiverDistrict() {
                         : "bg-slate-400 cursor-not-allowed"
                     } text-white`}
                   >
-                    {isSubmitting ? "جاري الإرسال..." : "احصل على التفاصيل"}
-                    <ChevronRight className="w-4 h-4 ml-2" />
+                    {isSubmitting ? (
+                      <>
+                        <Loader className="w-4 h-4 ml-2 animate-spin" />
+                        جاري الإرسال...
+                      </>
+                    ) : (
+                      <>
+                        احصل على التفاصيل
+                        <ChevronRight className="w-4 h-4 ml-2" />
+                      </>
+                    )}
                   </Button>
                 </form>
               )}
