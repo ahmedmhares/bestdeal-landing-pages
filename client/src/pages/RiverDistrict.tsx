@@ -1,10 +1,22 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { ChevronRight, MapPin, Home, TrendingUp, DollarSign, Sparkles, Zap, BarChart3, Shield, MessageCircle, Check, Loader } from "lucide-react";
 import { toast } from "sonner";
 import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
+
+// Utility function to extract UTM parameters
+function getUTMParameters() {
+  const params = new URLSearchParams(window.location.search);
+  return {
+    utmSource: params.get("utm_source") || undefined,
+    utmCampaign: params.get("utm_campaign") || undefined,
+    utmMedium: params.get("utm_medium") || undefined,
+    utmContent: params.get("utm_content") || undefined,
+    fbclid: params.get("fbclid") || undefined,
+  };
+}
 
 export default function RiverDistrict() {
   const [buyingPurpose, setBuyingPurpose] = useState<"living" | "investment" | null>(null);
@@ -13,6 +25,7 @@ export default function RiverDistrict() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
   const whatsappPhone = "+201044238910";
+  const utmParams = getUTMParameters();
 
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -30,7 +43,7 @@ export default function RiverDistrict() {
     setIsSubmitting(true);
 
     try {
-      // Prepare lead data
+      // Prepare lead data with UTM parameters
       const leadData: LeadData = {
         name: formData.name,
         phone: formData.phone,
@@ -38,13 +51,15 @@ export default function RiverDistrict() {
         pageUrl: window.location.href,
         projectName: "River District",
         buyingPurpose: buyingPurpose,
+        source: "river-district-landing",
+        ...utmParams,
       };
 
       // Submit to Google Apps Script
       const success = await submitLeadToGoogleScript(leadData);
 
       if (!success) {
-        toast.error("فشل حفظ البيانات. الرجاء المحاولة مرة أخرى");
+        toast.error("حدث خطأ أثناء حفظ البيانات، برجاء المحاولة مرة أخرى");
         setIsSubmitting(false);
         return;
       }
@@ -296,7 +311,7 @@ export default function RiverDistrict() {
                       name="name"
                       value={formData.name}
                       onChange={handleFormChange}
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                      className="w-full px-4 py-3 md:py-2 text-base md:text-sm border border-slate-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
                       placeholder="أدخل اسمك الكامل"
                       required
                     />
@@ -312,7 +327,7 @@ export default function RiverDistrict() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleFormChange}
-                      className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                      className="w-full px-4 py-3 md:py-2 text-base md:text-sm border border-slate-300 rounded-lg focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
                       placeholder="+20 1XX XXX XXXX"
                       required
                     />
@@ -323,29 +338,29 @@ export default function RiverDistrict() {
                     <label className="block text-sm font-semibold text-slate-900 mb-3">
                       ما هو الغرض من الاستثمار؟
                     </label>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3 md:gap-4">
                       <button
                         type="button"
                         onClick={() => setBuyingPurpose("investment")}
-                        className={`p-4 rounded-lg border-2 transition-all ${
+                        className={`p-5 md:p-4 rounded-lg border-2 transition-all ${
                           buyingPurpose === "investment"
                             ? "border-green-600 bg-green-50"
                             : "border-slate-200 hover:border-green-300"
                         }`}
                       >
-                        <TrendingUp className={`w-5 h-5 mb-2 ${buyingPurpose === "investment" ? "text-green-600" : "text-slate-600"}`} />
+                        <TrendingUp className={`w-6 h-6 md:w-5 md:h-5 mb-2 mx-auto ${buyingPurpose === "investment" ? "text-green-600" : "text-slate-600"}`} />
                         <p className="text-sm font-semibold">استثمار</p>
                       </button>
                       <button
                         type="button"
                         onClick={() => setBuyingPurpose("living")}
-                        className={`p-4 rounded-lg border-2 transition-all ${
+                        className={`p-5 md:p-4 rounded-lg border-2 transition-all ${
                           buyingPurpose === "living"
                             ? "border-blue-600 bg-blue-50"
                             : "border-slate-200 hover:border-blue-300"
                         }`}
                       >
-                        <Home className={`w-5 h-5 mb-2 ${buyingPurpose === "living" ? "text-blue-600" : "text-slate-600"}`} />
+                        <Home className={`w-6 h-6 md:w-5 md:h-5 mb-2 mx-auto ${buyingPurpose === "living" ? "text-blue-600" : "text-slate-600"}`} />
                         <p className="text-sm font-semibold">سكن</p>
                       </button>
                     </div>
@@ -356,7 +371,7 @@ export default function RiverDistrict() {
                     type="submit"
                     disabled={isSubmitting || !buyingPurpose}
                     size="lg"
-                    className={`w-full ${
+                    className={`w-full py-6 md:py-3 text-base md:text-sm font-semibold ${
                       buyingPurpose === "living"
                         ? "bg-blue-600 hover:bg-blue-700"
                         : buyingPurpose === "investment"

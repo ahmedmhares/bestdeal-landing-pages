@@ -91,30 +91,17 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* CTA Buttons */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <Button
-                      variant="outline"
-                      className="border-white/30 text-white hover:bg-white/10"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/${project.id}/end-users`);
-                      }}
-                    >
-                      For Living
-                      <ChevronRight className="w-4 h-4 ml-2" />
-                    </Button>
-                    <Button
-                      className="bg-green-600 hover:bg-green-700 text-white"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        navigate(`/${project.id}`);
-                      }}
-                    >
-                      For Investment
-                      <ChevronRight className="w-4 h-4 ml-2" />
-                    </Button>
-                  </div>
+                  {/* CTA Button */}
+                  <Button
+                    className="w-full bg-green-600 hover:bg-green-700 text-white"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/${project.id}`);
+                    }}
+                  >
+                    For Investment
+                    <ChevronRight className="w-4 h-4 ml-2" />
+                  </Button>
                 </div>
               </Card>
             ))}

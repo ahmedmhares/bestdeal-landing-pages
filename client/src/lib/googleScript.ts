@@ -11,6 +11,12 @@ export interface LeadData {
   pageUrl: string;
   projectName: string;
   buyingPurpose: "living" | "investment";
+  source?: string;
+  utmSource?: string;
+  utmCampaign?: string;
+  utmMedium?: string;
+  utmContent?: string;
+  fbclid?: string;
 }
 
 /**
@@ -22,26 +28,48 @@ export interface LeadData {
  */
 export async function submitLeadToGoogleScript(leadData: LeadData): Promise<boolean> {
   try {
+    // Validate required fields
+    if (!leadData.name || !leadData.name.trim()) {
+      console.error("Validation error: Name is required");
+      return false;
+    }
+    if (!leadData.phone || !leadData.phone.trim()) {
+      console.error("Validation error: Phone is required");
+      return false;
+    }
+
     // Google Apps Script Web App URL
     const appsScriptUrl = "https://script.google.com/macros/s/AKfycbzg4SsCqPWAro1Lc_8WvHas67jyOs7YZ3GEMcQf8NvXS9PZQFkB9GucXeijCiIPF6LX/exec";
 
     // Prepare the payload as FormData
     const formData = new FormData();
-    formData.append("name", leadData.name);
-    formData.append("phone", leadData.phone);
+    formData.append("name", leadData.name.trim());
+    formData.append("phone", leadData.phone.trim());
     formData.append("timestamp", leadData.timestamp);
     formData.append("pageUrl", leadData.pageUrl);
     formData.append("projectName", leadData.projectName);
     formData.append("buyingPurpose", leadData.buyingPurpose === "living" ? "سكن" : "استثمار");
-    formData.append("source", "river-district-landing");
+    formData.append("source", leadData.source || "river-district-landing");
+    
+    // Add UTM parameters if available
+    if (leadData.utmSource) formData.append("utmSource", leadData.utmSource);
+    if (leadData.utmCampaign) formData.append("utmCampaign", leadData.utmCampaign);
+    if (leadData.utmMedium) formData.append("utmMedium", leadData.utmMedium);
+    if (leadData.utmContent) formData.append("utmContent", leadData.utmContent);
+    if (leadData.fbclid) formData.append("fbclid", leadData.fbclid);
 
-    // Submit to Google Apps Script
-    // FormData will be sent as application/x-www-form-urlencoded
+    // Submit to Google Apps Script with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
+
     const response = await fetch(appsScriptUrl, {
       method: "POST",
       body: formData,
+      signal: controller.signal,
       // Don't set Content-Type header - browser will set it automatically with FormData
     });
+
+    clearTimeout(timeoutId);
 
     // Check if response is ok
     if (!response.ok) {
@@ -49,10 +77,26 @@ export async function submitLeadToGoogleScript(leadData: LeadData): Promise<bool
       return false;
     }
 
+    // Try to parse response as JSON for additional validation
+    try {
+      const responseData = await response.json();
+      if (responseData.success === false) {
+        console.error("Google Apps Script returned error:", responseData.error);
+        return false;
+      }
+    } catch (e) {
+      // Response might not be JSON, but that's ok if status is 200
+      console.log("Lead submitted successfully (non-JSON response)");
+    }
+
     console.log("Lead submitted to Google Apps Script successfully");
     return true;
   } catch (error) {
-    console.error("Failed to submit lead to Google Apps Script:", error);
+    if (error instanceof Error && error.name === "AbortError") {
+      console.error("Request timeout: Google Apps Script took too long to respond");
+    } else {
+      console.error("Failed to submit lead to Google Apps Script:", error);
+    }
     return false;
   }
 }
