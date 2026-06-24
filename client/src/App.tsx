@@ -5,28 +5,15 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import RiverDistrict from "./pages/RiverDistrict";
-import MostakbalCity from "./pages/MostakbalCity";
-import NewCapital from "./pages/NewCapital";
-import NorthCoast from "./pages/NorthCoast";
-import NewZayed from "./pages/NewZayed";
-
+import LandingPageTemplate from "./components/LandingPageTemplate";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/404" component={NotFound} />
-      {/* River District */}
-      <Route path="/river-district" component={RiverDistrict} />
-      {/* Mostakbal City */}
-      <Route path="/mostakbal-city" component={MostakbalCity} />
-      {/* New Capital */}
-      <Route path="/new-capital" component={NewCapital} />
-      {/* North Coast */}
-      <Route path="/north-coast" component={NorthCoast} />
-      {/* New Zayed */}
-      <Route path="/new-zayed" component={NewZayed} />
+      {/* Dynamic landing pages - all project routes use LandingPageTemplate */}
+      <Route path="/:projectId" component={({ projectId }: any) => <LandingPageTemplate projectId={projectId} />} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>

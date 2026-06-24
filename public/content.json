@@ -1,0 +1,431 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "lastUpdated": "2026-06-24",
+    "description": "Content management file for Best Deal Real Estate Landing Pages"
+  },
+  "global": {
+    "companyName": "Best Deal Real Estate",
+    "whatsappNumber": "+201001234567",
+    "ctaText": "Get Current Prices & Payment Plan",
+    "successMessage": "تم استلام بياناتك بنجاح",
+    "errorMessage": "حدث خطأ أثناء حفظ البيانات، برجاء المحاولة مرة أخرى",
+    "seo": {
+      "title": "Best Deal - Real Estate Investment in Egypt",
+      "description": "Discover premium real estate investment opportunities in Egypt's most sought-after locations",
+      "keywords": "real estate, investment, Egypt, Cairo, New Capital, North Coast"
+    }
+  },
+  "projects": [
+    {
+      "id": "river-district",
+      "name": "River District",
+      "developer": "New Capital Development Authority",
+      "location": "New Capital, Egypt",
+      "description": "Luxury waterfront living in the heart of the New Capital",
+      "longDescription": "River District is a premium waterfront project located in the heart of the New Capital. It features luxury residential units with modern architecture, green spaces, and world-class amenities.",
+      "pricePerMeter": 85000,
+      "monthlyInstallment": 150000,
+      "paymentPlan": "من 80,000 جنيه شهرياً",
+      "features": [
+        "Waterfront Location",
+        "Modern Architecture",
+        "Green Spaces",
+        "24/7 Security",
+        "Smart Home Technology",
+        "Luxury Amenities"
+      ],
+      "highlights": [
+        {
+          "title": "موقع متميز",
+          "description": "قلب العاصمة الجديدة"
+        },
+        {
+          "title": "تصميم عصري",
+          "description": "معمارية حديثة وفاخرة"
+        },
+        {
+          "title": "عائد استثماري قوي",
+          "description": "موقع استراتيجي = تقدير سعري مستمر"
+        },
+        {
+          "title": "خدمات عالمية",
+          "description": "مول تجاري وفنادق ومراكز طبية"
+        },
+        {
+          "title": "بنية تحتية حديثة",
+          "description": "طرق واسعة وشبكات حديثة"
+        },
+        {
+          "title": "مطور موثوق",
+          "description": "جهة حكومية بسجل حافل"
+        }
+      ],
+      "faq": [
+        {
+          "question": "ما هو أفضل وقت للاستثمار في River District؟",
+          "answer": "الآن هو أفضل وقت قبل اكتمال المشروع والارتفاع الكبير في الأسعار. المرحلة الحالية توفر أسعار تنافسية وخطط دفع مرنة."
+        },
+        {
+          "question": "هل هناك خطط دفع مرنة؟",
+          "answer": "نعم، نوفر خطط دفع مرنة جداً تبدأ من 80,000 جنيه شهرياً مع فترات سماح وتسهيلات خاصة."
+        },
+        {
+          "question": "ما هو العائد المتوقع من الاستثمار؟",
+          "answer": "العائد المتوقع قوي جداً نظراً للموقع الاستراتيجي والطلب المتزايد. التقدير السعري المتوقع 15-20% سنوياً."
+        },
+        {
+          "question": "هل المشروع آمن استثمارياً؟",
+          "answer": "نعم، المشروع من جهة حكومية موثوقة جداً مع سجل حافل في تنفيذ المشاريع الكبرى."
+        },
+        {
+          "question": "كيف أبدأ الاستثمار؟",
+          "answer": "تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية. سنساعدك في كل خطوة من خطوات الاستثمار."
+        }
+      ],
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=600&fit=crop",
+        "gallery": [
+          "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1512207736139-c586b0c62d3b?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=600&h=400&fit=crop"
+        ]
+      },
+      "seo": {
+        "title": "River District - Luxury Waterfront Living in New Capital",
+        "description": "Premium waterfront investment in the heart of the New Capital with modern architecture and world-class amenities",
+        "keywords": "River District, New Capital, luxury real estate, waterfront living"
+      },
+      "ctaText": "Get Current Prices & Payment Plan",
+      "whatsappNumber": "+201001234567"
+    },
+    {
+      "id": "mostakbal-city",
+      "name": "Mostakbal City",
+      "developer": "Mostakbal City Development",
+      "location": "45 km from Cairo, Egypt",
+      "description": "Modern city development with strategic location and strong investment potential",
+      "longDescription": "مدينة المستقبل هي مشروع عملاق يقع على بعد 45 كم من القاهرة. تتميز بموقع استراتيجي ممتاز وتخطيط عمراني حديث.",
+      "pricePerMeter": 45000,
+      "monthlyInstallment": 80000,
+      "paymentPlan": "من 80,000 جنيه شهرياً",
+      "features": [
+        "Strategic Location",
+        "Modern Design",
+        "Flexible Payment",
+        "Community Amenities",
+        "Shopping Centers",
+        "Schools & Hospitals"
+      ],
+      "highlights": [
+        {
+          "title": "وحدات سكنية متنوعة",
+          "description": "شقق وفيلات وتاون هاوسات"
+        },
+        {
+          "title": "خدمات عالمية",
+          "description": "مول تجاري وفنادق ومراكز طبية"
+        },
+        {
+          "title": "بنية تحتية حديثة",
+          "description": "طرق واسعة وشبكات حديثة"
+        },
+        {
+          "title": "عائد استثماري قوي",
+          "description": "موقع استراتيجي = تقدير سعري مستمر"
+        },
+        {
+          "title": "مطور موثوق",
+          "description": "شركة عملاقة بسجل حافل"
+        },
+        {
+          "title": "نمو سريع",
+          "description": "منطقة سكنية سريعة التطور"
+        }
+      ],
+      "faq": [
+        {
+          "question": "ما هو أفضل وقت للاستثمار في Mostakbal City؟",
+          "answer": "الآن هو أفضل وقت للاستثمار قبل اكتمال المشروع والارتفاع الكبير في الأسعار. المرحلة الحالية توفر أسعار تنافسية وخطط دفع مرنة."
+        },
+        {
+          "question": "هل هناك خطط دفع مرنة؟",
+          "answer": "نعم، نوفر خطط دفع مرنة جداً تبدأ من 80,000 جنيه شهرياً مع فترات سماح وتسهيلات خاصة."
+        },
+        {
+          "question": "ما هو العائد المتوقع من الاستثمار؟",
+          "answer": "العائد المتوقع قوي جداً نظراً للموقع الاستراتيجي والطلب المتزايد. التقدير السعري المتوقع 12-18% سنوياً."
+        },
+        {
+          "question": "هل المشروع آمن استثمارياً؟",
+          "answer": "نعم، المشروع من شركة موثوقة جداً مع سجل حافل في تنفيذ المشاريع الكبرى."
+        },
+        {
+          "question": "كيف أبدأ الاستثمار؟",
+          "answer": "تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية. سنساعدك في كل خطوة من خطوات الاستثمار."
+        }
+      ],
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1200&h=600&fit=crop",
+        "gallery": [
+          "https://images.unsplash.com/photo-1449844908441-8829872d2607?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1512207736139-c586b0c62d3b?w=600&h=400&fit=crop"
+        ]
+      },
+      "seo": {
+        "title": "Mostakbal City - Modern Investment Opportunity",
+        "description": "Strategic location development with modern design and strong investment potential",
+        "keywords": "Mostakbal City, real estate investment, modern development"
+      },
+      "ctaText": "Get Current Prices & Payment Plan",
+      "whatsappNumber": "+201001234567"
+    },
+    {
+      "id": "new-capital",
+      "name": "New Capital",
+      "developer": "New Capital Development Authority",
+      "location": "45 km from Cairo, Egypt",
+      "description": "Premium investment in Egypt's largest urban development project",
+      "longDescription": "العاصمة الجديدة هي أكبر مشروع تطوير حضري في مصر. تتميز بموقع استراتيجي ممتاز وخدمات عالمية.",
+      "pricePerMeter": 120000,
+      "monthlyInstallment": 200000,
+      "paymentPlan": "من 200,000 جنيه شهرياً",
+      "features": [
+        "Government Project",
+        "World-Class Amenities",
+        "Strategic Location",
+        "Modern Infrastructure",
+        "Business District",
+        "Luxury Residences"
+      ],
+      "highlights": [
+        {
+          "title": "مشروع حكومي",
+          "description": "أكبر مشروع تطوير حضري في مصر"
+        },
+        {
+          "title": "خدمات عالمية",
+          "description": "مول تجاري وفنادق ومراكز طبية"
+        },
+        {
+          "title": "بنية تحتية حديثة",
+          "description": "طرق واسعة وشبكات حديثة"
+        },
+        {
+          "title": "عائد استثماري ممتاز",
+          "description": "موقع استراتيجي = أفضل عائد"
+        },
+        {
+          "title": "مطور موثوق",
+          "description": "جهة حكومية بسجل حافل"
+        },
+        {
+          "title": "نمو سريع جداً",
+          "description": "منطقة حكومية سريعة التطور"
+        }
+      ],
+      "faq": [
+        {
+          "question": "ما هو أفضل وقت للاستثمار في العاصمة الجديدة؟",
+          "answer": "الآن هو أفضل وقت للاستثمار قبل اكتمال المشروع والارتفاع الكبير في الأسعار. المرحلة الحالية توفر أسعار تنافسية."
+        },
+        {
+          "question": "هل هناك خطط دفع مرنة؟",
+          "answer": "نعم، نوفر خطط دفع مرنة جداً تبدأ من 200,000 جنيه شهرياً مع فترات سماح وتسهيلات خاصة."
+        },
+        {
+          "question": "ما هو العائد المتوقع من الاستثمار؟",
+          "answer": "العائد المتوقع قوي جداً جداً نظراً للموقع الاستراتيجي والطلب الكبير جداً. التقدير السعري المتوقع 20-25% سنوياً."
+        },
+        {
+          "question": "هل المشروع آمن استثمارياً؟",
+          "answer": "نعم، المشروع من جهة حكومية موثوقة جداً جداً مع سجل حافل في تنفيذ المشاريع الكبرى."
+        },
+        {
+          "question": "كيف أبدأ الاستثمار؟",
+          "answer": "تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية. سنساعدك في كل خطوة من خطوات الاستثمار."
+        }
+      ],
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&h=600&fit=crop",
+        "gallery": [
+          "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1512207736139-c586b0c62d3b?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=600&h=400&fit=crop"
+        ]
+      },
+      "seo": {
+        "title": "New Capital - Egypt's Largest Urban Development",
+        "description": "Premium investment in Egypt's new administrative capital with world-class amenities",
+        "keywords": "New Capital, Egypt, real estate investment, urban development"
+      },
+      "ctaText": "Get Current Prices & Payment Plan",
+      "whatsappNumber": "+201001234567"
+    },
+    {
+      "id": "north-coast",
+      "name": "North Coast",
+      "developer": "North Coast Development",
+      "location": "Mediterranean Coast, Egypt",
+      "description": "Luxury beachfront properties with tourism and investment potential",
+      "longDescription": "أفضل وجهة سياحية واستثمارية على ساحل البحر المتوسط. مشروع سياحي متكامل بإطلالات بحرية خلابة وخدمات عالمية.",
+      "pricePerMeter": 65000,
+      "monthlyInstallment": 120000,
+      "paymentPlan": "من 120,000 جنيه شهرياً",
+      "features": [
+        "Beachfront Location",
+        "Tourism Potential",
+        "Rental Income",
+        "Resort Amenities",
+        "Water Sports",
+        "Luxury Villas"
+      ],
+      "highlights": [
+        {
+          "title": "إطلالة بحرية خلابة",
+          "description": "ساحل البحر المتوسط الفاخر"
+        },
+        {
+          "title": "خدمات عالمية",
+          "description": "منتجع فاخر وفنادق ومراكز طبية"
+        },
+        {
+          "title": "بنية تحتية حديثة",
+          "description": "طرق واسعة وشبكات حديثة"
+        },
+        {
+          "title": "عائد استثماري قوي",
+          "description": "موسم سياحي طويل = عائد مستمر"
+        },
+        {
+          "title": "مطور موثوق",
+          "description": "شركة عملاقة بسجل حافل"
+        },
+        {
+          "title": "نمو سريع",
+          "description": "وجهة سياحية سريعة التطور"
+        }
+      ],
+      "faq": [
+        {
+          "question": "ما هو أفضل وقت للاستثمار في North Coast؟",
+          "answer": "الآن هو أفضل وقت للاستثمار قبل اكتمال المشروع والارتفاع الكبير في الأسعار. المرحلة الحالية توفر أسعار تنافسية."
+        },
+        {
+          "question": "هل هناك خطط دفع مرنة؟",
+          "answer": "نعم، نوفر خطط دفع مرنة جداً تبدأ من 120,000 جنيه شهرياً مع فترات سماح وتسهيلات خاصة."
+        },
+        {
+          "question": "ما هو العائد المتوقع من الاستثمار؟",
+          "answer": "العائد المتوقع قوي جداً نظراً للموقع السياحي والطلب المتزايد. التقدير السعري المتوقع 15-20% سنوياً بالإضافة إلى دخل الإيجار."
+        },
+        {
+          "question": "هل المشروع آمن استثمارياً؟",
+          "answer": "نعم، المشروع من شركة موثوقة جداً مع سجل حافل في تنفيذ المشاريع السياحية الكبرى."
+        },
+        {
+          "question": "كيف أبدأ الاستثمار؟",
+          "answer": "تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية. سنساعدك في كل خطوة من خطوات الاستثمار."
+        }
+      ],
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=600&fit=crop",
+        "gallery": [
+          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=600&h=400&fit=crop"
+        ]
+      },
+      "seo": {
+        "title": "North Coast - Luxury Beachfront Investment",
+        "description": "Premium beachfront properties with tourism and rental income potential on the Mediterranean coast",
+        "keywords": "North Coast, beachfront, Mediterranean, luxury real estate"
+      },
+      "ctaText": "Get Current Prices & Payment Plan",
+      "whatsappNumber": "+201001234567"
+    },
+    {
+      "id": "new-zayed",
+      "name": "New Zayed",
+      "developer": "New Zayed Development",
+      "location": "50 km from Cairo, Egypt",
+      "description": "Contemporary residential development with excellent location and growth potential",
+      "longDescription": "مشروع سكني معاصر بموقع ممتاز وإمكانيات نمو كبيرة. يتميز بتصميم حديث وأسعار منافسة وخطط دفع مرنة.",
+      "pricePerMeter": 55000,
+      "monthlyInstallment": 100000,
+      "paymentPlan": "من 100,000 جنيه شهرياً",
+      "features": [
+        "Modern Design",
+        "Good Location",
+        "Affordable Pricing",
+        "Community Features",
+        "Green Spaces",
+        "Family Friendly"
+      ],
+      "highlights": [
+        {
+          "title": "تصميم معاصر",
+          "description": "معمارية حديثة وعملية"
+        },
+        {
+          "title": "موقع ممتاز",
+          "description": "قريب من المدينة الجديدة والعاصمة الإدارية"
+        },
+        {
+          "title": "بنية تحتية حديثة",
+          "description": "طرق واسعة وشبكات حديثة"
+        },
+        {
+          "title": "عائد استثماري جيد",
+          "description": "موقع استراتيجي وتطور مستمر"
+        },
+        {
+          "title": "مطور موثوق",
+          "description": "شركة عملاقة بسجل حافل"
+        },
+        {
+          "title": "نمو سريع",
+          "description": "منطقة سكنية سريعة التطور"
+        }
+      ],
+      "faq": [
+        {
+          "question": "ما هو أفضل وقت للاستثمار في New Zayed؟",
+          "answer": "الآن هو أفضل وقت للاستثمار قبل اكتمال المشروع والارتفاع الكبير في الأسعار. المرحلة الحالية توفر أسعار تنافسية جداً."
+        },
+        {
+          "question": "هل هناك خطط دفع مرنة؟",
+          "answer": "نعم، نوفر خطط دفع مرنة جداً تبدأ من 100,000 جنيه شهرياً مع فترات سماح وتسهيلات خاصة."
+        },
+        {
+          "question": "ما هو العائد المتوقع من الاستثمار؟",
+          "answer": "العائد المتوقع جيد جداً نظراً للموقع الاستراتيجي والطلب المتزايد. التقدير السعري المتوقع 10-15% سنوياً."
+        },
+        {
+          "question": "هل المشروع آمن استثمارياً؟",
+          "answer": "نعم، المشروع من شركة موثوقة جداً مع سجل حافل في تنفيذ المشاريع السكنية الكبرى."
+        },
+        {
+          "question": "كيف أبدأ الاستثمار؟",
+          "answer": "تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية. سنساعدك في كل خطوة من خطوات الاستثمار."
+        }
+      ],
+      "images": {
+        "hero": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200&h=600&fit=crop",
+        "gallery": [
+          "https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&h=400&fit=crop",
+          "https://images.unsplash.com/photo-1512207736139-c586b0c62d3b?w=600&h=400&fit=crop"
+        ]
+      },
+      "seo": {
+        "title": "New Zayed - Contemporary Residential Investment",
+        "description": "Modern residential development with excellent location and strong growth potential",
+        "keywords": "New Zayed, residential, real estate investment, modern development"
+      },
+      "ctaText": "Get Current Prices & Payment Plan",
+      "whatsappNumber": "+201001234567"
+    }
+  ]
+}
