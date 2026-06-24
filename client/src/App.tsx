@@ -6,6 +6,10 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import RiverDistrict from "./pages/RiverDistrict";
+import MostakbalCity from "./pages/MostakbalCity";
+import NewCapital from "./pages/NewCapital";
+import NorthCoast from "./pages/NorthCoast";
+import NewZayed from "./pages/NewZayed";
 
 
 function Router() {
@@ -13,8 +17,16 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/404" component={NotFound} />
-      {/* River District - Single unified page */}
+      {/* River District */}
       <Route path="/river-district" component={RiverDistrict} />
+      {/* Mostakbal City */}
+      <Route path="/mostakbal-city" component={MostakbalCity} />
+      {/* New Capital */}
+      <Route path="/new-capital" component={NewCapital} />
+      {/* North Coast */}
+      <Route path="/north-coast" component={NorthCoast} />
+      {/* New Zayed */}
+      <Route path="/new-zayed" component={NewZayed} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
