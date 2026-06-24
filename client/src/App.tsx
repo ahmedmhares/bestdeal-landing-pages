@@ -11,12 +11,10 @@ import RiverDistrict from "./pages/RiverDistrict";
 function Router() {
   return (
     <Switch>
-      <Route path={""} component={Home} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/404" component={NotFound} />
       {/* River District - Single unified page */}
-      <Route path={"/river-district"}>
-        {() => <RiverDistrict />}
-      </Route>
+      <Route path="/river-district" component={RiverDistrict} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>
