@@ -61,7 +61,7 @@ export function useContent() {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const response = await fetch('/content.json');
+        const response = await fetch('/src/data/content.json');
         if (!response.ok) {
           throw new Error('Failed to load content');
         }
