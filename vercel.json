@@ -1,24 +1,8 @@
 {
-  "buildCommand": "pnpm run build",
-  "outputDirectory": "dist/public",
-  "framework": "vite",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
+  "rewrites": [
     {
-      "src": "/assets/(?<path>.*)",
-      "headers": {
-        "cache-control": "public, max-age=31536000, immutable"
-      }
-    },
-    {
-      "src": "/content.json",
-      "dest": "/content.json"
-    },
-    {
-      "src": "/(?<path>.*)",
-      "dest": "/index.html",
-      "status": 200
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
