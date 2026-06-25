@@ -3,9 +3,11 @@ import { Card } from "@/components/ui/card";
 import { ChevronRight, MapPin, Loader } from "lucide-react";
 import { useLocation } from "wouter";
 import { useContent } from "@/hooks/useContent";
+import { useMetaPixelPageView } from "@/hooks/useMetaPixel";
 
 export default function Home() {
   const [, navigate] = useLocation();
+  useMetaPixelPageView();
   const { getAllProjects, loading } = useContent();
   const projects = getAllProjects();
 

@@ -6,6 +6,7 @@ import { ChevronRight, MapPin, Droplet, Building2, Trees, Users, Zap, MessageCir
 import { toast } from "sonner";
 import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
 import { useContent } from "@/hooks/useContent";
+import { trackMetaPixelLead } from "@/hooks/useMetaPixel";
 
 // Utility function to extract UTM parameters
 function getUTMParameters() {
@@ -20,6 +21,7 @@ function getUTMParameters() {
 }
 
 export default function RiverDistrict() {
+  useMetaPixelPageView();
   const { getProject, getGlobalData, loading } = useContent();
   const project = getProject("river-district");
   const globalData = getGlobalData();
@@ -86,6 +88,15 @@ export default function RiverDistrict() {
         setFormData({ name: "", phone: "" });
         setBuyingPurpose(null);
         setSubmitSuccess(true);
+
+        // Track Lead event in Meta Pixel
+        trackMetaPixelLead({
+          value: 77000,
+          currency: "EGP",
+          content_name: project.name,
+          content_type: "product",
+          content_category: "real_estate",
+        });
 
         // Open WhatsApp after successful submission
         setTimeout(() => {

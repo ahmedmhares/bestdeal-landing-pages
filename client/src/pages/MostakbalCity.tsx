@@ -1,3 +1,4 @@
+import { useMetaPixelPageView } from "@/hooks/useMetaPixel";
 import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -20,6 +21,7 @@ function getUTMParameters() {
 }
 
 export default function MostakbalCity() {
+  useMetaPixelPageView();
   const { getProject, getGlobalData, loading } = useContent();
   const project = getProject("mostakbal-city");
   const globalData = getGlobalData();
