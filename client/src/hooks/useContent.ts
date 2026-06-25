@@ -61,7 +61,9 @@ export function useContent() {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        const response = await fetch('/content.json');
+        // Add cache-busting parameter to force fresh fetch
+        const timestamp = new Date().getTime();
+        const response = await fetch(`/content.json?v=${timestamp}`);
         if (!response.ok) {
           throw new Error('Failed to load content');
         }
