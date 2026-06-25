@@ -1,8 +1,8 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { ChevronRight, MapPin, BarChart3, MessageCircle, Loader } from "lucide-react";
+import { ChevronRight, MapPin, Droplet, Building2, Trees, Users, Zap, MessageCircle, Loader, ChevronLeft, ChevronRight as ChevronRightIcon, MapPinIcon, DollarSign, Calendar, Shield, Home, Waves, Leaf, Utensils, Dumbbell, Users2, Bike, ShoppingBag, Lightbulb, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
 import { useContent } from "@/hooks/useContent";
@@ -28,20 +28,21 @@ export default function RiverDistrict() {
   const [formData, setFormData] = useState({ name: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [galleryIndex, setGalleryIndex] = useState(0);
   const formRef = useRef<HTMLDivElement>(null);
   const utmParams = getUTMParameters();
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Loader className="w-8 h-8 animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-slate-950">
+        <Loader className="w-8 h-8 animate-spin text-amber-500" />
       </div>
     );
   }
 
   if (!project || !globalData) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-slate-950">
         <p className="text-red-500">Project not found</p>
       </div>
     );
@@ -103,324 +104,334 @@ export default function RiverDistrict() {
     }
   };
 
-  const handleFloatingWhatsApp = () => {
-    const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
-    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
-    window.open(whatsappUrl, "_blank");
-  };
+  const galleryImages = project.images?.gallery || [];
+  const amenities = [
+    { icon: Home, label: "Club House" },
+    { icon: Waves, label: "Swimming Pools" },
+    { icon: Dumbbell, label: "Gym & Fitness" },
+    { icon: Users2, label: "Kids Area" },
+    { icon: Bike, label: "Walking & Cycling Tracks" },
+    { icon: ShoppingBag, label: "Retail Area" },
+    { icon: Leaf, label: "Landscaped Gardens" },
+    { icon: Shield, label: "24/7 Security" },
+    { icon: Lightbulb, label: "Underground Parking" },
+    { icon: Lock, label: "Premium Services" },
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 rtl">
-      {/* Floating WhatsApp Button */}
-      <button
-        onClick={handleFloatingWhatsApp}
-        className="fixed right-6 bottom-6 z-40 w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 md:right-8 md:bottom-8"
-        title="تواصل عبر WhatsApp"
-      >
-        <MessageCircle className="w-6 h-6" />
-      </button>
-
+    <div className="min-h-screen bg-slate-950 text-white">
       {/* Header */}
-      <header className="border-b border-slate-200 bg-white">
-        <div className="container py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-slate-900">{globalData.companyName}</h1>
-              <p className="text-sm text-slate-600">Real Estate Investment</p>
-            </div>
-            <a href="/" className="text-blue-600 hover:text-blue-700">
-              ← العودة للرئيسية
-            </a>
-          </div>
+      <header className="fixed top-0 left-0 right-0 z-40 bg-slate-950/80 backdrop-blur-sm border-b border-amber-500/20">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="text-amber-500 font-bold text-xl">NILE</div>
+          <a href="/" className="text-amber-500 hover:text-amber-400 transition-colors text-sm">
+            ← العودة للرئيسية
+          </a>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-32 overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-40"
-          style={{ backgroundImage: `url(${project.images.hero})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-800/70 to-slate-900/80" />
-        <div className="container relative z-10">
-          <div className="max-w-3xl">
-            <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">{project.name}</h2>
-            <p className="text-2xl text-slate-100 mb-6 font-semibold">{project.description}</p>
-            <p className="text-lg text-slate-200 leading-relaxed">{project.longDescription}</p>
-          </div>
-        </div>
-      </section>
+      <section
+        className="relative w-full h-screen bg-cover bg-center pt-20 flex items-center justify-between overflow-hidden"
+        style={{
+          backgroundImage: `url('/manus-storage/WhatsAppImage2026-06-17at5.46.20PM(1)_7f333f8f.webp')`,
+        }}
+      >
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
 
-      {/* Key Info */}
-      <section className="py-12 bg-white border-b border-slate-200">
-        <div className="container">
-          <div className="grid md:grid-cols-3 gap-8">
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          {/* Left: Text Content */}
+          <div className="space-y-6">
             <div>
-              <p className="text-sm text-slate-600 mb-2">Location</p>
-              <div className="flex items-center gap-2 text-slate-900">
-                <MapPin className="w-5 h-5" />
-                <p className="font-semibold">{project.location}</p>
+              <h1 className="text-6xl lg:text-7xl font-bold text-white mb-2 tracking-tight">
+                River
+              </h1>
+              <h2 className="text-5xl lg:text-6xl font-light text-white mb-4">District</h2>
+              <p className="text-amber-500 text-lg font-light italic">Capital Lake Living</p>
+            </div>
+
+            <p className="text-lg text-amber-500 font-light">
+              Premium residences in one of the most strategic locations in the New Administrative Capital.
+            </p>
+
+                <p className="text-gray-300 text-base leading-relaxed max-w-md">
+              {project.longDescription}
+            </p>
+
+            {/* Info Cards */}
+            <div className="grid grid-cols-3 gap-4 pt-4">
+              <div className="bg-slate-900/60 backdrop-blur border border-amber-500/30 rounded-lg p-4">
+                <MapPin className="w-5 h-5 text-amber-500 mb-2" />
+                <p className="text-xs text-gray-400 mb-1">Location</p>
+                <p className="text-sm font-semibold text-white">{project.location}</p>
+              </div>
+              <div className="bg-slate-900/60 backdrop-blur border border-amber-500/30 rounded-lg p-4">
+                <DollarSign className="w-5 h-5 text-amber-500 mb-2" />
+                <p className="text-xs text-gray-400 mb-1">Starting From</p>
+                <p className="text-sm font-semibold text-white">{project.pricePerMeter}K EGP / m²</p>
+              </div>
+              <div className="bg-slate-900/60 backdrop-blur border border-amber-500/30 rounded-lg p-4">
+                <Calendar className="w-5 h-5 text-amber-500 mb-2" />
+                <p className="text-xs text-gray-400 mb-1">Payment Plan</p>
+                <p className="text-sm font-semibold text-white">{project.paymentPlan}</p>
               </div>
             </div>
-            <div>
-              <p className="text-sm text-slate-600 mb-2">Starting From</p>
-              <p className="text-2xl font-bold text-slate-900">
-                {(project.pricePerMeter / 1000).toFixed(0)}K EGP
-              </p>
-            </div>
-            <div>
-              <p className="text-sm text-slate-600 mb-2">Payment Plan</p>
-              <p className="text-2xl font-bold text-slate-900">
-                {project.paymentPlan}
-              </p>
-            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Lead Form - Moved Higher */}
-      <section className="py-16 bg-slate-50">
-        <div className="container">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-3xl font-bold text-slate-900 mb-4 text-center">احصل على العرض الحالي</h3>
-            <p className="text-slate-600 text-center mb-12">تواصل معنا الآن واحصل على أفضل الأسعار والعروض الحصرية</p>
+          {/* Right: Lead Form */}
+          <div
+            ref={formRef}
+            className="bg-slate-900/80 backdrop-blur border border-amber-500/40 rounded-xl p-8 shadow-2xl"
+          >
+            <h3 className="text-2xl font-bold text-white mb-6">Request Current Prices & Payment Plan</h3>
 
-            <Card className="p-8" ref={formRef}>
-              {submitSuccess ? (
-                <div className="text-center py-12">
-                  <div className="mb-4">
-                    <MessageCircle className="w-16 h-16 text-green-600 mx-auto" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-slate-900 mb-2">{globalData.successMessage}</h4>
-                  <p className="text-slate-600 mb-6">سيتم فتح WhatsApp لتتمكن من التواصل معنا</p>
-                  <Button
-                    onClick={() => {
-                      setSubmitSuccess(false);
-                      setFormData({ name: "", phone: "" });
-                      setBuyingPurpose(null);
-                    }}
-                    className="bg-blue-600 hover:bg-blue-700"
-                  >
-                    ملء النموذج مرة أخرى
-                  </Button>
+            <form onSubmit={handleFormSubmit} className="space-y-5">
+              {/* Full Name */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Full Name <span className="text-amber-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleFormChange}
+                  placeholder="Your full name"
+                  className="w-full px-4 py-3 bg-slate-800 border border-amber-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 transition-colors"
+                />
+              </div>
+
+              {/* Mobile Number */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Mobile Number <span className="text-amber-500">*</span>
+                </label>
+                <div className="flex gap-2">
+                  <select className="px-3 py-3 bg-slate-800 border border-amber-500/30 rounded-lg text-white focus:outline-none focus:border-amber-500">
+                    <option>+20</option>
+                  </select>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleFormChange}
+                    placeholder="01XXXXXXXXX"
+                    className="flex-1 px-4 py-3 bg-slate-800 border border-amber-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 transition-colors"
+                  />
                 </div>
-              ) : (
-                <form onSubmit={handleFormSubmit} className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">الاسم الكامل</label>
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="أدخل اسمك الكامل"
-                      value={formData.name}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 md:py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">رقم الهاتف</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      placeholder="+20 1XX XXX XXXX"
-                      value={formData.phone}
-                      onChange={handleFormChange}
-                      className="w-full px-4 py-3 md:py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">ما هو الغرض من الاستثمار؟</label>
-                    <div className="flex gap-4">
-                      <button
-                        type="button"
-                        onClick={() => setBuyingPurpose("investment")}
-                        className={`flex-1 py-3 md:py-2 px-4 rounded-lg font-medium transition-all ${
-                          buyingPurpose === "investment"
-                            ? "bg-blue-600 text-white"
-                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                        }`}
-                      >
-                        استثمار
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setBuyingPurpose("living")}
-                        className={`flex-1 py-3 md:py-2 px-4 rounded-lg font-medium transition-all ${
-                          buyingPurpose === "living"
-                            ? "bg-blue-600 text-white"
-                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                        }`}
-                      >
-                        سكن
-                      </button>
-                    </div>
-                  </div>
-
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 md:py-3 text-lg md:text-base"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader className="w-5 h-5 mr-2 animate-spin" />
-                        جاري الإرسال...
-                      </>
-                    ) : (
-                      <>
-                        {project.ctaText || globalData.ctaText}
-                        <ChevronRight className="w-5 h-5 mr-2" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              )}
-            </Card>
-
-            {submitSuccess && (
-              <div className="mt-8 text-center">
-                <Button
-                  onClick={() => {
-                    const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
-                    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
-                    window.open(whatsappUrl, "_blank");
-                  }}
-                  className="bg-green-600 hover:bg-green-700 text-white"
-                >
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  تواصل عبر WhatsApp
-                </Button>
               </div>
-            )}
+
+              {/* Purpose */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-3">Purpose</label>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setBuyingPurpose("investment")}
+                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+                      buyingPurpose === "investment"
+                        ? "bg-amber-500 text-slate-950"
+                        : "bg-slate-800 text-gray-300 border border-amber-500/30 hover:border-amber-500"
+                    }`}
+                  >
+                    Investment
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBuyingPurpose("living")}
+                    className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all ${
+                      buyingPurpose === "living"
+                        ? "bg-amber-500 text-slate-950"
+                        : "bg-slate-800 text-gray-300 border border-amber-500/30 hover:border-amber-500"
+                    }`}
+                  >
+                    Living
+                  </button>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold py-3 rounded-lg transition-all disabled:opacity-50"
+              >
+                {isSubmitting ? "Submitting..." : "Request Pricing"}
+              </Button>
+
+              <p className="text-xs text-gray-400 text-center">
+                We respect your privacy. Your data is 100% secure.
+              </p>
+            </form>
           </div>
         </div>
       </section>
 
       {/* Why River District Section */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <h3 className="text-4xl font-bold text-slate-900 mb-4 text-center">Why River District?</h3>
-          <p className="text-lg text-slate-600 mb-12 text-center max-w-2xl mx-auto">River District combines a prime New Capital location, low built-up ratio, direct Green River frontage, and flexible payment plans, making it suitable for both investment and premium living.</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Developer</h4>
-              <p className="text-slate-600">{project.developer}</p>
-            </div>
-            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Project Area</h4>
-              <p className="text-slate-600">40 Acres</p>
-            </div>
-            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Built-up Ratio</h4>
-              <p className="text-slate-600">12%</p>
-            </div>
-            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Green River Frontage</h4>
-              <p className="text-slate-600">Direct waterfront access</p>
-            </div>
-            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Location</h4>
-              <p className="text-slate-600">New Administrative Capital</p>
-            </div>
-            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Payment Plans</h4>
-              <p className="text-slate-600">Up to 10 Years</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="py-20 bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white text-center mb-16">Why River District?</h2>
 
-      {/* Quick Benefits Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="container">
-          <h3 className="text-4xl font-bold text-slate-900 mb-12 text-center">Quick Benefits</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              "40 Acres Masterplan",
-              "Direct Green River Frontage",
-              "Prime Location in New Capital",
-              "Built by Nile Development",
-              "Low Building Density",
-              "Flexible Installments"
-            ].map((benefit, idx) => (
-              <div key={idx} className="flex items-center gap-4 p-6 bg-white rounded-lg hover:bg-blue-50 transition-colors shadow-sm">
-                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <ChevronRight className="w-6 h-6 text-white" />
-                </div>
-                <p className="text-lg font-semibold text-slate-900">{benefit}</p>
+              { icon: MapPin, title: "Prime Location", desc: "Strategically located in the New Administrative Capital" },
+              { icon: Droplet, title: "Direct Green River Frontage", desc: "Exclusive waterfront location with scenic views" },
+              { icon: Trees, title: "Low Built-up Ratio", desc: "12% built-up ratio for exclusive living" },
+              { icon: Building2, title: "Developer: Nile Development", desc: "Trusted developer with proven track record" },
+              { icon: Zap, title: "Project Area: 40 Acres", desc: "Large-scale masterplan built for modern living" },
+              { icon: Calendar, title: "Payment Plans Up to 10 Years", desc: "Flexible payment plans designed for your needs" },
+            ].map((item: any, idx: number) => (
+              <div key={idx} className="bg-slate-800 border border-amber-500/30 rounded-xl p-6 hover:border-amber-500/60 transition-all">
+                <item.icon className="w-8 h-8 text-amber-500 mb-4" />
+                <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-gray-400 text-sm">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">مميزات المشروع</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {project.highlights.map((highlight, idx) => (
-              <Card key={idx} className="p-6 hover:shadow-lg transition-shadow">
-                <h4 className="text-lg font-bold text-slate-900 mb-2">{highlight.title}</h4>
-                <p className="text-slate-600">{highlight.description}</p>
-              </Card>
+      {/* Gallery Section */}
+      {galleryImages.length > 0 && (
+        <section className="py-20 bg-slate-950">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-4xl font-bold text-white text-center mb-12">Gallery</h2>
+
+            <div className="relative">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                {galleryImages.map((img: any, idx: number) => (
+                  <div
+                    key={idx}
+                    className={`relative rounded-lg overflow-hidden border border-amber-500/20 hover:border-amber-500/60 transition-all cursor-pointer ${
+                      idx === galleryIndex ? "md:col-span-2 md:row-span-2" : ""
+                    }`}
+                    onClick={() => setGalleryIndex(idx)}
+                  >
+                    <img
+                      src={img}
+                      alt={`Gallery ${idx}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Gallery Navigation */}
+              <button
+                onClick={() => setGalleryIndex((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-amber-500/80 hover:bg-amber-500 text-slate-950 p-2 rounded-full transition-all"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={() => setGalleryIndex((prev) => (prev + 1) % galleryImages.length)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-amber-500/80 hover:bg-amber-500 text-slate-950 p-2 rounded-full transition-all"
+              >
+                <ChevronRightIcon className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Amenities Section */}
+      <section className="py-20 bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white text-center mb-16">Amenities</h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+            {amenities.map((amenity: any, idx: number) => (
+              <div key={idx} className="flex flex-col items-center text-center">
+                <div className="bg-slate-800 border border-amber-500/30 rounded-lg p-6 mb-4 hover:border-amber-500/60 transition-all">
+                  <amenity.icon className="w-8 h-8 text-amber-500 mx-auto" />
+                </div>
+                <p className="text-sm font-medium text-gray-300">{amenity.label}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-20 bg-slate-50">
-        <div className="container">
-          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">أسئلة شائعة</h3>
-          <div className="max-w-2xl mx-auto">
-            <Accordion type="single" collapsible>
-              {project.faq.map((item, idx) => (
-                <AccordionItem key={idx} value={`item-${idx}`}>
-                  <AccordionTrigger>{item.question}</AccordionTrigger>
-                  <AccordionContent>{item.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
+      {/* FAQ Section */}
+      <section className="py-20 bg-slate-950">
+        <div className="max-w-3xl mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
+
+          <Accordion type="single" collapsible className="space-y-4">
+            {project.faq?.map((faq: any, idx: number) => (
+              <AccordionItem
+                key={idx}
+                value={`faq-${idx}`}
+                className="border border-amber-500/30 rounded-lg px-6 hover:border-amber-500/60 transition-all"
+              >
+                <AccordionTrigger className="text-white hover:text-amber-500 transition-colors py-4">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-gray-300 pb-4">{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-blue-600 text-white">
-        <div className="container text-center">
-          <h3 className="text-3xl font-bold mb-4">هل تريد معرفة المزيد؟</h3>
-          <p className="text-xl mb-8 opacity-90">تواصل معنا الآن واحصل على جميع التفاصيل والعروض الحصرية</p>
-          <div className="flex gap-4 justify-center flex-wrap">
+      <section className="py-20 bg-gradient-to-r from-amber-500/10 to-amber-600/10 border-y border-amber-500/30">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Ready to Invest?</h2>
+          <p className="text-gray-300 mb-8">Contact us now to get the best prices and exclusive offers</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
-              onClick={() => {
-                formRef.current?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="bg-white text-blue-600 hover:bg-slate-100"
+              onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth" })}
+              className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-8 py-3 rounded-lg"
             >
-              ملء النموذج
+              Fill the Form
             </Button>
             <Button
-              onClick={handleFloatingWhatsApp}
-              className="bg-green-600 hover:bg-green-700"
+              onClick={() => {
+                const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
+                const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
+                window.open(whatsappUrl, "_blank");
+              }}
+              className="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-3 rounded-lg"
             >
-              <MessageCircle className="w-5 h-5 mr-2" />
-              تواصل عبر WhatsApp
+              Contact via WhatsApp
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 py-8 bg-white">
-        <div className="container text-center text-slate-600">
-          <p>© 2026 {project.name} by {globalData.companyName}. All rights reserved.</p>
+      <footer className="bg-slate-950 border-t border-amber-500/20 py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div>
+              <p className="text-white font-bold mb-2">Best Deal Real Estate</p>
+              <p className="text-gray-400 text-sm">Building premium communities and creating better lives.</p>
+            </div>
+            <div className="text-center md:text-right">
+              <p className="text-gray-400 text-sm mb-2">© 2026 Best Deal Real Estate. All Rights Reserved.</p>
+              <a href="#" className="text-amber-500 hover:text-amber-400 text-sm transition-colors">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Button */}
+      <button
+        onClick={() => {
+          const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
+          const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
+          window.open(whatsappUrl, "_blank");
+        }}
+        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all z-30 flex items-center gap-2"
+        title="Contact via WhatsApp"
+      >
+        <MessageCircle className="w-6 h-6" />
+      </button>
     </div>
   );
 }
