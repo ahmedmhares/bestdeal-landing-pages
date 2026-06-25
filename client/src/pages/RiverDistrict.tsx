@@ -134,7 +134,7 @@ export default function RiverDistrict() {
       <section
         className="relative w-full h-screen bg-cover bg-center pt-20 flex items-center justify-between overflow-hidden"
         style={{
-          backgroundImage: `url('/manus-storage/WhatsAppImage2026-06-17at5.46.20PM(1)_7f333f8f.webp')`,
+          backgroundImage: `url('${project.images?.hero || "/manus-storage/1bd536a9-ac5a-4cea-aa37-38bdd347e5c9_ffffcc67.jpeg"}')`,
         }}
       >
         {/* Dark Gradient Overlay */}
