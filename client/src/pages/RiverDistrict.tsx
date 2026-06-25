@@ -170,7 +170,7 @@ export default function RiverDistrict() {
               <div className="bg-slate-900/60 backdrop-blur border border-amber-500/30 rounded-lg p-4">
                 <DollarSign className="w-5 h-5 text-amber-500 mb-2" />
                 <p className="text-xs text-gray-400 mb-1">Starting From</p>
-                <p className="text-sm font-semibold text-white">{project.pricePerMeter}K EGP / m²</p>
+                <p className="text-sm font-semibold text-white">{project.pricePerMeter / 1000}K EGP / m²</p>
               </div>
               <div className="bg-slate-900/60 backdrop-blur border border-amber-500/30 rounded-lg p-4">
                 <Calendar className="w-5 h-5 text-amber-500 mb-2" />
