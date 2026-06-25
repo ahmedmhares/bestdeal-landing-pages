@@ -17,7 +17,7 @@
     },
     {
       "src": "/(?<path>.*)",
-      "dest": "/index.html"
+      "dest": "/api/spa.js"
     }
   ]
 }
