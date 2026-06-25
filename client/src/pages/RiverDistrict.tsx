@@ -6,7 +6,7 @@ import { ChevronRight, MapPin, Droplet, Building2, Trees, Users, Zap, MessageCir
 import { toast } from "sonner";
 import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
 import { useContent } from "@/hooks/useContent";
-import { trackMetaPixelLead } from "@/hooks/useMetaPixel";
+import { trackMetaPixelLead, useMetaPixelPageView } from "@/hooks/useMetaPixel";
 
 // Utility function to extract UTM parameters
 function getUTMParameters() {
