@@ -103,8 +103,23 @@ export default function RiverDistrict() {
     }
   };
 
+  const handleFloatingWhatsApp = () => {
+    const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
+    const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 rtl">
+      {/* Floating WhatsApp Button */}
+      <button
+        onClick={handleFloatingWhatsApp}
+        className="fixed right-6 bottom-6 z-40 w-14 h-14 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all hover:scale-110 md:right-8 md:bottom-8"
+        title="تواصل عبر WhatsApp"
+      >
+        <MessageCircle className="w-6 h-6" />
+      </button>
+
       {/* Header */}
       <header className="border-b border-slate-200 bg-white">
         <div className="container py-6">
@@ -163,98 +178,8 @@ export default function RiverDistrict() {
         </div>
       </section>
 
-      {/* Why River District Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="container">
-          <h3 className="text-4xl font-bold text-slate-900 mb-4 text-center">Why River District?</h3>
-          <p className="text-lg text-slate-600 mb-12 text-center max-w-2xl mx-auto">River District combines a prime New Capital location, low built-up ratio, direct Green River frontage, and flexible payment plans, making it suitable for both investment and premium living.</p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Developer</h4>
-              <p className="text-slate-600">{project.developer}</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Project Area</h4>
-              <p className="text-slate-600">40 Acres</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Built-up Ratio</h4>
-              <p className="text-slate-600">12%</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Green River Frontage</h4>
-              <p className="text-slate-600">Direct waterfront access</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Location</h4>
-              <p className="text-slate-600">New Administrative Capital</p>
-            </div>
-            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-              <h4 className="text-xl font-bold text-slate-900 mb-2">Payment Plans</h4>
-              <p className="text-slate-600">Up to 10 Years</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Benefits Section */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <h3 className="text-4xl font-bold text-slate-900 mb-12 text-center">Quick Benefits</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              "40 Acres Masterplan",
-              "Direct Green River Frontage",
-              "Prime Location in New Capital",
-              "Built by Nile Development",
-              "Low Building Density",
-              "Flexible Installments"
-            ].map((benefit, idx) => (
-              <div key={idx} className="flex items-center gap-4 p-6 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors">
-                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <ChevronRight className="w-6 h-6 text-white" />
-                </div>
-                <p className="text-lg font-semibold text-slate-900">{benefit}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="py-20 bg-slate-50">
-        <div className="container">
-          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">مميزات المشروع</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {project.highlights.map((highlight, idx) => (
-              <Card key={idx} className="p-6 hover:shadow-lg transition-shadow">
-                <h4 className="text-lg font-bold text-slate-900 mb-2">{highlight.title}</h4>
-                <p className="text-slate-600">{highlight.description}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-20 bg-white">
-        <div className="container">
-          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">أسئلة شائعة</h3>
-          <div className="max-w-2xl mx-auto">
-            <Accordion type="single" collapsible>
-              {project.faq.map((item, idx) => (
-                <AccordionItem key={idx} value={`item-${idx}`}>
-                  <AccordionTrigger>{item.question}</AccordionTrigger>
-                  <AccordionContent>{item.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </section>
-
-      {/* Lead Form */}
-      <section className="py-20 bg-slate-50">
+      {/* Lead Form - Moved Higher */}
+      <section className="py-16 bg-slate-50">
         <div className="container">
           <div className="max-w-2xl mx-auto">
             <h3 className="text-3xl font-bold text-slate-900 mb-4 text-center">احصل على العرض الحالي</h3>
@@ -375,6 +300,96 @@ export default function RiverDistrict() {
         </div>
       </section>
 
+      {/* Why River District Section */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <h3 className="text-4xl font-bold text-slate-900 mb-4 text-center">Why River District?</h3>
+          <p className="text-lg text-slate-600 mb-12 text-center max-w-2xl mx-auto">River District combines a prime New Capital location, low built-up ratio, direct Green River frontage, and flexible payment plans, making it suitable for both investment and premium living.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Developer</h4>
+              <p className="text-slate-600">{project.developer}</p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Project Area</h4>
+              <p className="text-slate-600">40 Acres</p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Built-up Ratio</h4>
+              <p className="text-slate-600">12%</p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Green River Frontage</h4>
+              <p className="text-slate-600">Direct waterfront access</p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Location</h4>
+              <p className="text-slate-600">New Administrative Capital</p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Payment Plans</h4>
+              <p className="text-slate-600">Up to 10 Years</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Benefits Section */}
+      <section className="py-20 bg-slate-50">
+        <div className="container">
+          <h3 className="text-4xl font-bold text-slate-900 mb-12 text-center">Quick Benefits</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              "40 Acres Masterplan",
+              "Direct Green River Frontage",
+              "Prime Location in New Capital",
+              "Built by Nile Development",
+              "Low Building Density",
+              "Flexible Installments"
+            ].map((benefit, idx) => (
+              <div key={idx} className="flex items-center gap-4 p-6 bg-white rounded-lg hover:bg-blue-50 transition-colors shadow-sm">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </div>
+                <p className="text-lg font-semibold text-slate-900">{benefit}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">مميزات المشروع</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {project.highlights.map((highlight, idx) => (
+              <Card key={idx} className="p-6 hover:shadow-lg transition-shadow">
+                <h4 className="text-lg font-bold text-slate-900 mb-2">{highlight.title}</h4>
+                <p className="text-slate-600">{highlight.description}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-20 bg-slate-50">
+        <div className="container">
+          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">أسئلة شائعة</h3>
+          <div className="max-w-2xl mx-auto">
+            <Accordion type="single" collapsible>
+              {project.faq.map((item, idx) => (
+                <AccordionItem key={idx} value={`item-${idx}`}>
+                  <AccordionTrigger>{item.question}</AccordionTrigger>
+                  <AccordionContent>{item.answer}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-20 bg-blue-600 text-white">
         <div className="container text-center">
@@ -390,11 +405,7 @@ export default function RiverDistrict() {
               ملء النموذج
             </Button>
             <Button
-              onClick={() => {
-                const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
-                const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
-                window.open(whatsappUrl, "_blank");
-              }}
+              onClick={handleFloatingWhatsApp}
               className="bg-green-600 hover:bg-green-700"
             >
               <MessageCircle className="w-5 h-5 mr-2" />
