@@ -1,12 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getAllProjects } from "@/lib/projects";
-import { ChevronRight, MapPin, DollarSign } from "lucide-react";
+import { ChevronRight, MapPin, Loader } from "lucide-react";
 import { useLocation } from "wouter";
+import { useContent } from "@/hooks/useContent";
 
 export default function Home() {
   const [, navigate] = useLocation();
+  const { getAllProjects, loading } = useContent();
   const projects = getAllProjects();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <Loader className="w-8 h-8 animate-spin text-white" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
@@ -58,15 +67,15 @@ export default function Home() {
                   {/* Key Metrics */}
                   <div className="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-white/10">
                     <div>
-                      <p className="text-xs text-slate-400 mb-1">Price per M²</p>
+                      <p className="text-xs text-slate-400 mb-1">Starting From</p>
                       <p className="text-lg font-bold text-white">
                         {(project.pricePerMeter / 1000).toFixed(0)}K EGP
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-slate-400 mb-1">Monthly from</p>
+                      <p className="text-xs text-slate-400 mb-1">Payment Plan</p>
                       <p className="text-lg font-bold text-white">
-                        {(project.monthlyInstallment / 1000).toFixed(0)}K EGP
+                        {project.paymentPlan || (project.monthlyInstallment ? `${(project.monthlyInstallment / 1000).toFixed(0)}K/mo` : "Flexible")}
                       </p>
                     </div>
                   </div>

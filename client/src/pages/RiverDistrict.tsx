@@ -141,22 +141,22 @@ export default function RiverDistrict() {
         <div className="container">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <p className="text-sm text-slate-600 mb-2">الموقع</p>
+              <p className="text-sm text-slate-600 mb-2">Location</p>
               <div className="flex items-center gap-2 text-slate-900">
                 <MapPin className="w-5 h-5" />
                 <p className="font-semibold">{project.location}</p>
               </div>
             </div>
             <div>
-              <p className="text-sm text-slate-600 mb-2">سعر المتر</p>
+              <p className="text-sm text-slate-600 mb-2">Starting From</p>
               <p className="text-2xl font-bold text-slate-900">
-                Starting From {(project.pricePerMeter / 1000).toFixed(0)}K EGP
+                {(project.pricePerMeter / 1000).toFixed(0)}K EGP
               </p>
             </div>
             <div>
-              <p className="text-sm text-slate-600 mb-2">خطة الدفع</p>
+              <p className="text-sm text-slate-600 mb-2">Payment Plan</p>
               <p className="text-2xl font-bold text-slate-900">
-                {project.monthlyInstallment ? `${(project.monthlyInstallment / 1000).toFixed(0)}K EGP` : project.paymentPlan}
+                {project.paymentPlan}
               </p>
             </div>
           </div>
@@ -171,7 +171,7 @@ export default function RiverDistrict() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
               <h4 className="text-xl font-bold text-slate-900 mb-2">Developer</h4>
-              <p className="text-slate-600">Nile Development</p>
+              <p className="text-slate-600">{project.developer}</p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
               <h4 className="text-xl font-bold text-slate-900 mb-2">Project Area</h4>
