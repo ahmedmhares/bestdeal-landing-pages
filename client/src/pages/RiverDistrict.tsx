@@ -121,16 +121,17 @@ export default function RiverDistrict() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-32 overflow-hidden bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
+          className="absolute inset-0 bg-cover bg-center opacity-40"
           style={{ backgroundImage: `url(${project.images.hero})` }}
         />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-800/70 to-slate-900/80" />
         <div className="container relative z-10">
           <div className="max-w-3xl">
-            <h2 className="text-5xl md:text-6xl font-bold text-slate-900 mb-4">{project.name}</h2>
-            <p className="text-xl text-slate-700 mb-6">{project.description}</p>
-            <p className="text-lg text-slate-600">{project.longDescription}</p>
+            <h2 className="text-5xl md:text-7xl font-bold text-white mb-6">{project.name}</h2>
+            <p className="text-2xl text-slate-100 mb-6 font-semibold">{project.description}</p>
+            <p className="text-lg text-slate-200 leading-relaxed">{project.longDescription}</p>
           </div>
         </div>
       </section>
@@ -149,29 +150,79 @@ export default function RiverDistrict() {
             <div>
               <p className="text-sm text-slate-600 mb-2">سعر المتر</p>
               <p className="text-2xl font-bold text-slate-900">
-                {(project.pricePerMeter / 1000).toFixed(0)}K EGP
+                Starting From {(project.pricePerMeter / 1000).toFixed(0)}K EGP
               </p>
             </div>
             <div>
-              <p className="text-sm text-slate-600 mb-2">الدفع الشهري</p>
+              <p className="text-sm text-slate-600 mb-2">خطة الدفع</p>
               <p className="text-2xl font-bold text-slate-900">
-                {(project.monthlyInstallment / 1000).toFixed(0)}K EGP
+                {project.monthlyInstallment ? `${(project.monthlyInstallment / 1000).toFixed(0)}K EGP` : project.paymentPlan}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Project Description */}
-      <section className="py-20">
+      {/* Why River District Section */}
+      <section className="py-20 bg-slate-50">
         <div className="container">
-          <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">{project.name}</h3>
-          <p className="text-lg text-slate-700 mb-8 text-center max-w-2xl mx-auto">{project.longDescription}</p>
+          <h3 className="text-4xl font-bold text-slate-900 mb-4 text-center">Why River District?</h3>
+          <p className="text-lg text-slate-600 mb-12 text-center max-w-2xl mx-auto">River District combines a prime New Capital location, low built-up ratio, direct Green River frontage, and flexible payment plans, making it suitable for both investment and premium living.</p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Developer</h4>
+              <p className="text-slate-600">Nile Development</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Project Area</h4>
+              <p className="text-slate-600">40 Acres</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Built-up Ratio</h4>
+              <p className="text-slate-600">12%</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Green River Frontage</h4>
+              <p className="text-slate-600">Direct waterfront access</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Location</h4>
+              <p className="text-slate-600">New Administrative Capital</p>
+            </div>
+            <div className="bg-white p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <h4 className="text-xl font-bold text-slate-900 mb-2">Payment Plans</h4>
+              <p className="text-slate-600">Up to 10 Years</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Benefits Section */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <h3 className="text-4xl font-bold text-slate-900 mb-12 text-center">Quick Benefits</h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              "40 Acres Masterplan",
+              "Direct Green River Frontage",
+              "Prime Location in New Capital",
+              "Built by Nile Development",
+              "Low Building Density",
+              "Flexible Installments"
+            ].map((benefit, idx) => (
+              <div key={idx} className="flex items-center gap-4 p-6 bg-slate-50 rounded-lg hover:bg-blue-50 transition-colors">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </div>
+                <p className="text-lg font-semibold text-slate-900">{benefit}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-50">
         <div className="container">
           <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">مميزات المشروع</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -186,7 +237,7 @@ export default function RiverDistrict() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20">
+      <section className="py-20 bg-white">
         <div className="container">
           <h3 className="text-3xl font-bold text-slate-900 mb-12 text-center">أسئلة شائعة</h3>
           <div className="max-w-2xl mx-auto">
@@ -203,7 +254,7 @@ export default function RiverDistrict() {
       </section>
 
       {/* Lead Form */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-50">
         <div className="container">
           <div className="max-w-2xl mx-auto">
             <h3 className="text-3xl font-bold text-slate-900 mb-4 text-center">احصل على العرض الحالي</h3>
@@ -356,7 +407,7 @@ export default function RiverDistrict() {
       {/* Footer */}
       <footer className="border-t border-slate-200 py-8 bg-white">
         <div className="container text-center text-slate-600">
-          <p>© 2026 {project.name} by {globalData.companyName}. جميع الحقوق محفوظة.</p>
+          <p>© 2026 {project.name} by {globalData.companyName}. All rights reserved.</p>
         </div>
       </footer>
     </div>

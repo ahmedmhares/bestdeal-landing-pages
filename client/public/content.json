@@ -20,45 +20,45 @@
     {
       "id": "river-district",
       "name": "River District",
-      "developer": "New Capital Development Authority",
+      "developer": "Nile Development",
       "location": "New Capital, Egypt",
-      "description": "Luxury waterfront living in the heart of the New Capital",
-      "longDescription": "River District is a premium waterfront project located in the heart of the New Capital. It features luxury residential units with modern architecture, green spaces, and world-class amenities.",
-      "pricePerMeter": 85000,
-      "monthlyInstallment": 150000,
-      "paymentPlan": "من 80,000 جنيه شهرياً",
+      "description": "Premium residences in one of the most strategic locations in the New Administrative Capital.",
+      "longDescription": "River District by Nile Development is a premium real estate project in the New Administrative Capital, designed for buyers looking for a strong location, flexible payment plans, and long-term investment potential.",
+      "pricePerMeter": 77000,
+      "monthlyInstallment": null,
+      "paymentPlan": "Installments up to 10 Years",
       "features": [
-        "Waterfront Location",
-        "Modern Architecture",
-        "Green Spaces",
-        "24/7 Security",
-        "Smart Home Technology",
-        "Luxury Amenities"
+        "Direct View on Green River",
+        "Prime Location in New Administrative Capital",
+        "Low Density Masterplan",
+        "Commercial & Medical Hub",
+        "Smart Infrastructure",
+        "Nile Development"
       ],
       "highlights": [
         {
-          "title": "موقع متميز",
-          "description": "قلب العاصمة الجديدة"
+          "title": "40 Acres Masterplan",
+          "description": "Low building density with premium green spaces"
         },
         {
-          "title": "تصميم عصري",
-          "description": "معمارية حديثة وفاخرة"
+          "title": "Direct Green River Frontage",
+          "description": "Exclusive waterfront location with scenic views"
         },
         {
-          "title": "عائد استثماري قوي",
-          "description": "موقع استراتيجي = تقدير سعري مستمر"
+          "title": "Prime Location in New Capital",
+          "description": "Strategic position near commercial and medical hubs"
         },
         {
-          "title": "خدمات عالمية",
-          "description": "مول تجاري وفنادق ومراكز طبية"
+          "title": "Built by Nile Development",
+          "description": "Trusted developer with proven track record"
         },
         {
-          "title": "بنية تحتية حديثة",
-          "description": "طرق واسعة وشبكات حديثة"
+          "title": "Low Building Density",
+          "description": "12% built-up ratio for exclusive living"
         },
         {
-          "title": "مطور موثوق",
-          "description": "جهة حكومية بسجل حافل"
+          "title": "Flexible Installments",
+          "description": "Payment plans up to 10 years"
         }
       ],
       "faq": [
@@ -84,17 +84,17 @@
         }
       ],
       "images": {
-        "hero": "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&h=600&fit=crop",
+        "hero": "/manus-storage/1bd536a9-ac5a-4cea-aa37-38bdd347e5c9_2fc4a23e.jpeg",
         "gallery": [
-          "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1512207736139-c586b0c62d3b?w=600&h=400&fit=crop",
-          "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=600&h=400&fit=crop"
+          "/manus-storage/1bd536a9-ac5a-4cea-aa37-38bdd347e5c9_2fc4a23e.jpeg",
+          "/manus-storage/WhatsAppImage2026-06-08at6.53.02PM_ccbd1d86.jpeg",
+          "/manus-storage/WhatsAppImage2026-06-17at5.46.20PM_72372e27.jpeg"
         ]
       },
       "seo": {
-        "title": "River District - Luxury Waterfront Living in New Capital",
-        "description": "Premium waterfront investment in the heart of the New Capital with modern architecture and world-class amenities",
-        "keywords": "River District, New Capital, luxury real estate, waterfront living"
+        "title": "River District - Premium Investment in New Capital by Nile Development",
+        "description": "River District combines prime New Capital location, direct Green River frontage, low density masterplan, and flexible payment plans for both investment and premium living",
+        "keywords": "River District, New Capital, Nile Development, luxury real estate, Green River"
       },
       "ctaText": "Get Current Prices & Payment Plan",
       "whatsappNumber": "+201044238910"
