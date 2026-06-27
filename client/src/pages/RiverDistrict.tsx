@@ -143,7 +143,7 @@ export default function RiverDistrict() {
 
       {/* Hero Section */}
       <section
-        className="relative w-full h-screen bg-cover bg-center pt-20 flex items-center justify-between overflow-hidden"
+        className="relative w-full min-h-screen lg:h-screen bg-cover bg-center pt-20 pb-12 lg:pb-0 flex items-center justify-between lg:overflow-hidden"
         style={{
           backgroundImage: `url('${project.images?.hero || "/manus-storage/1bd536a9-ac5a-4cea-aa37-38bdd347e5c9_ffffcc67.jpeg"}')`,
         }}
