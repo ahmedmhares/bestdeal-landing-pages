@@ -11,44 +11,20 @@ declare global {
   }
 }
 
-// Initialize Meta Pixel globally
-export const initMetaPixel = () => {
-  const pixelId = import.meta.env.VITE_META_PIXEL_ID;
-
-  if (!pixelId) {
-    console.warn("Meta Pixel ID not configured");
-    return;
-  }
-
-  // Initialize fbq function if not already done
-  if (!window.fbq) {
-    window.fbq = function () {
-      (window.fbq.q = window.fbq.q || []).push(arguments);
-    };
-  }
-  window._fbq = window._fbq || [];
-
-  // Initialize Meta Pixel with pixel ID
-  window.fbq("init", pixelId);
-  
-  // Fire initial PageView
-  window.fbq("track", "PageView");
-};
-
 // Hook to track PageView on component mount
+// Note: fbq is initialized globally in index.html, so just track PageView here
 export const useMetaPixelPageView = () => {
   useEffect(() => {
-    const pixelId = import.meta.env.VITE_META_PIXEL_ID;
-    if (pixelId && window.fbq) {
+    if (window.fbq) {
       window.fbq("track", "PageView");
     }
   }, []);
 };
 
 // Function to track Lead event
+// Called after successful form submission
 export const trackMetaPixelLead = (data?: Record<string, unknown>) => {
-  const pixelId = import.meta.env.VITE_META_PIXEL_ID;
-  if (pixelId && window.fbq) {
+  if (window.fbq) {
     window.fbq("track", "Lead", data || {});
   }
 };
