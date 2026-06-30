@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { ChevronRight, MapPin, Droplet, Building2, Trees, Users, Zap, MessageCircle, Loader, ChevronLeft, ChevronRight as ChevronRightIcon, MapPinIcon, DollarSign, Calendar, Shield, Home, Waves, Leaf, Utensils, Dumbbell, Users2, Bike, ShoppingBag, Lightbulb, Lock } from "lucide-react";
+import { ChevronRight, MapPin, Droplet, Building2, Trees, Users, Zap, Loader, ChevronLeft, ChevronRight as ChevronRightIcon, MapPinIcon, DollarSign, Calendar, Shield, Home, Waves, Leaf, Utensils, Dumbbell, Users2, Bike, ShoppingBag, Lightbulb, Lock } from "lucide-react";
 import { toast } from "sonner";
 import { submitLeadToGoogleScript, type LeadData } from "@/lib/googleScript";
 import { useContent } from "@/hooks/useContent";
@@ -431,18 +431,6 @@ export default function RiverDistrict() {
         </div>
       </footer>
 
-      {/* Floating WhatsApp Button */}
-      <button
-        onClick={() => {
-          const whatsappNumber = project.whatsappNumber || globalData.whatsappNumber;
-          const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, "")}?text=مرحباً، أنا مهتم بـ ${project.name}`;
-          window.open(whatsappUrl, "_blank");
-        }}
-        className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all z-30 flex items-center gap-2"
-        title="Contact via WhatsApp"
-      >
-        <MessageCircle className="w-6 h-6" />
-      </button>
     </div>
   );
 }
