@@ -11,6 +11,7 @@ export interface LeadData {
   pageUrl: string;
   projectName: string;
   buyingPurpose: "living" | "investment";
+  budget?: string;
   source?: string;
   utmSource?: string;
   utmCampaign?: string;
@@ -49,6 +50,7 @@ export async function submitLeadToGoogleScript(leadData: LeadData): Promise<bool
     formData.append("pageUrl", leadData.pageUrl);
     formData.append("projectName", leadData.projectName);
     formData.append("buyingPurpose", leadData.buyingPurpose === "living" ? "سكن" : "استثمار");
+    if (leadData.budget) formData.append("Budget", leadData.budget);
     formData.append("source", leadData.source || "river-district-landing");
     
     // Add UTM parameters if available

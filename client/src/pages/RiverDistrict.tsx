@@ -28,6 +28,7 @@ export default function RiverDistrict() {
 
   const [buyingPurpose, setBuyingPurpose] = useState<"living" | "investment" | null>(null);
   const [formData, setFormData] = useState({ name: "", phone: "" });
+  const [budget, setBudget] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -58,7 +59,7 @@ export default function RiverDistrict() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name.trim() || !formData.phone.trim() || !buyingPurpose) {
+    if (!formData.name.trim() || !formData.phone.trim() || !buyingPurpose || !budget) {
       toast.error("الرجاء ملء جميع الحقول");
       return;
     }
@@ -73,6 +74,7 @@ export default function RiverDistrict() {
         pageUrl: window.location.href,
         projectName: project.name,
         buyingPurpose: buyingPurpose || "investment",
+        budget,
         source: "river-district-landing",
         utmSource: utmParams.utmSource,
         utmCampaign: utmParams.utmCampaign,
@@ -87,6 +89,7 @@ export default function RiverDistrict() {
         toast.success(globalData.successMessage);
         setFormData({ name: "", phone: "" });
         setBuyingPurpose(null);
+        setBudget("");
         setSubmitSuccess(true);
 
         // Track Lead event in Meta Pixel
@@ -195,21 +198,25 @@ export default function RiverDistrict() {
           <div
             ref={formRef}
             className="bg-slate-900/80 backdrop-blur border border-amber-500/40 rounded-xl p-8 shadow-2xl"
+            dir="rtl"
           >
-            <h3 className="text-2xl font-bold text-white mb-6">Request Current Prices & Payment Plan</h3>
+            <h3 className="text-2xl font-bold text-white mb-3">اطلب الأسعار الحالية وخطة السداد</h3>
+            <p className="text-sm text-gray-300 mb-6">
+              املأ البيانات وسنرسل لك الأسعار الحالية وخطة السداد عبر واتساب .
+            </p>
 
             <form onSubmit={handleFormSubmit} className="space-y-5">
               {/* Full Name */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Full Name <span className="text-amber-500">*</span>
+                  الاسم الكامل <span className="text-amber-500">*</span>
                 </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleFormChange}
-                  placeholder="Your full name"
+                  placeholder="اكتب اسمك الكامل"
                   className="w-full px-4 py-3 bg-slate-800 border border-amber-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 transition-colors"
                 />
               </div>
@@ -217,7 +224,7 @@ export default function RiverDistrict() {
               {/* Mobile Number */}
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Mobile Number <span className="text-amber-500">*</span>
+                  رقم الهاتف <span className="text-amber-500">*</span>
                 </label>
                 <div className="flex gap-2">
                   <select className="px-3 py-3 bg-slate-800 border border-amber-500/30 rounded-lg text-white focus:outline-none focus:border-amber-500">
@@ -236,7 +243,7 @@ export default function RiverDistrict() {
 
               {/* Purpose */}
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-3">Purpose</label>
+                <label className="block text-sm font-medium text-gray-300 mb-3">الغرض</label>
                 <div className="flex gap-3">
                   <button
                     type="button"
@@ -247,7 +254,7 @@ export default function RiverDistrict() {
                         : "bg-slate-800 text-gray-300 border border-amber-500/30 hover:border-amber-500"
                     }`}
                   >
-                    Investment
+                    استثمار
                   </button>
                   <button
                     type="button"
@@ -258,9 +265,28 @@ export default function RiverDistrict() {
                         : "bg-slate-800 text-gray-300 border border-amber-500/30 hover:border-amber-500"
                     }`}
                   >
-                    Living
+                    سكن
                   </button>
                 </div>
+              </div>
+
+              {/* Budget */}
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
+                  ما هي ميزانيتك التقريبية؟ <span className="text-amber-500">*</span>
+                </label>
+                <select
+                  value={budget}
+                  onChange={(event) => setBudget(event.target.value)}
+                  required
+                  className="w-full px-4 py-3 bg-slate-800 border border-amber-500/30 rounded-lg text-white focus:outline-none focus:border-amber-500 transition-colors"
+                >
+                  <option value="" disabled>اختر ميزانيتك التقريبية</option>
+                  <option value="من 3 إلى 5 مليون جنيه">من 3 إلى 5 مليون جنيه</option>
+                  <option value="من 5 إلى 10 مليون جنيه">من 5 إلى 10 مليون جنيه</option>
+                  <option value="أكثر من 10 مليون جنيه">أكثر من 10 مليون جنيه</option>
+                  <option value="أحتاج معرفة الأسعار أولًا">أحتاج معرفة الأسعار أولًا</option>
+                </select>
               </div>
 
               {/* Submit Button */}
@@ -269,11 +295,11 @@ export default function RiverDistrict() {
                 disabled={isSubmitting}
                 className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold py-3 rounded-lg transition-all disabled:opacity-50"
               >
-                {isSubmitting ? "Submitting..." : "Request Pricing"}
+                {isSubmitting ? "جاري الإرسال..." : "اطلب الأسعار"}
               </Button>
 
               <p className="text-xs text-gray-400 text-center">
-                We respect your privacy. Your data is 100% secure.
+                نحترم خصوصيتك. بياناتك آمنة بنسبة 100٪.
               </p>
             </form>
           </div>
