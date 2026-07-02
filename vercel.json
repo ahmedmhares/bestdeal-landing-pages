@@ -3,6 +3,10 @@
   "outputDirectory": "dist/public",
   "rewrites": [
     {
+      "source": "/river-district",
+      "destination": "/river-district/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
