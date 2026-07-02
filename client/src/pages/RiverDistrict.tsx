@@ -119,6 +119,13 @@ export default function RiverDistrict() {
   };
 
   const galleryImages = project.images?.gallery || [];
+  const galleryImageDimensions: Record<string, { width: number; height: number }> = {
+    "/images/1bd536a9-ac5a-4cea-aa37-38bdd347e5c9.jpeg": { width: 596, height: 1280 },
+    "/images/WhatsAppImage2026-06-08at6.53.02PM.jpeg": { width: 720, height: 481 },
+    "/images/WhatsAppImage2026-06-08at6.53.02PM(1).jpeg": { width: 719, height: 478 },
+    "/images/WhatsAppImage2026-06-17at5.46.20PM.jpeg": { width: 1280, height: 720 },
+    "/images/428bb8d0-f4b1-4721-abe5-745373159667.jpeg": { width: 1600, height: 888 },
+  };
   const amenities = [
     { icon: Home, label: "Club House" },
     { icon: Waves, label: "Swimming Pools" },
@@ -349,6 +356,11 @@ export default function RiverDistrict() {
                     <img
                       src={img}
                       alt={`Gallery ${idx}`}
+                      width={galleryImageDimensions[img]?.width}
+                      height={galleryImageDimensions[img]?.height}
+                      loading="lazy"
+                      decoding="async"
+                      sizes={idx === galleryIndex ? "(min-width: 768px) 40vw, 100vw" : "(min-width: 768px) 20vw, 100vw"}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     />
                   </div>
